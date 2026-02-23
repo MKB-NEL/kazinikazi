@@ -3,71 +3,116 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Kazi ni Kazi - Rwanda's Job Marketplace</title>
+  <title>Kazi ni Kazi · Rwanda's Freelance Marketplace</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
   <style>
-    /* ===== ADDITIONAL STYLES (preserving original + mobile optimization) ===== */
-    
-    /* Font size controls (8px min - 16px max for body text) */
+    /* === STYLES (unchanged from previous version) === */
     * {
-      font-size: clamp(0.875rem, 4vw, 1rem); /* 14px - 16px */
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
     }
-    
-    h1 { font-size: clamp(2rem, 8vw, 2.5rem); } /* 32px - 40px */
-    h2 { font-size: clamp(1.5rem, 6vw, 1.8rem); } /* 24px - 28.8px */
-    h3 { font-size: clamp(1.2rem, 5vw, 1.4rem); } /* 19.2px - 22.4px */
+
+    :root {
+      --primary: #ff385c;
+      --primary-dark: #e31c5f;
+      --gray-50: #f8f9fa;
+      --gray-100: #f1f3f5;
+      --gray-200: #e9ecef;
+      --gray-300: #dee2e6;
+      --gray-400: #ced4da;
+      --gray-500: #868e96;
+      --gray-600: #495057;
+      --gray-700: #343a40;
+      --gray-800: #212529;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 999px;
+      --transition: all 0.2s ease;
+    }
+
+    body {
+      background: white;
+      color: var(--gray-800);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    * { font-size: clamp(0.875rem, 4vw, 1rem); }
+    h1 { font-size: clamp(2rem, 8vw, 2.5rem); }
+    h2 { font-size: clamp(1.5rem, 6vw, 1.8rem); }
+    h3 { font-size: clamp(1.2rem, 5vw, 1.4rem); }
     .section-title { font-size: clamp(1.5rem, 6vw, 1.8rem); }
     .card-title { font-size: clamp(1rem, 4vw, 1.1rem); }
     .card-subtitle { font-size: clamp(0.8rem, 3.5vw, 0.9rem); }
     .status-badge { font-size: clamp(0.7rem, 3vw, 0.8rem); }
-    
-    /* Main Navigation (centered) */
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 5vw, 32px);
+      width: 100%;
+      flex: 1;
+    }
+
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      background: white;
+      border-bottom: 1px solid var(--gray-200);
+      padding: clamp(8px, 2vw, 12px) clamp(16px, 4vw, 32px);
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 3vw, 24px);
+      z-index: 100;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .logo i { font-size: 1.2em; color: var(--primary); }
+    .logo span { color: var(--primary); }
+
     .main-nav {
       display: flex;
-      gap: clamp(8px, 2vw, 24px);
+      gap: clamp(6px, 2vw, 20px);
       align-items: center;
+      flex: 1 1 auto;
       justify-content: center;
-      flex: 1;
     }
     .nav-item {
       font-weight: 600;
-      font-size: clamp(0.85rem, 3.5vw, 1rem);
-      color: var(--gray-500);
+      font-size: clamp(0.9rem, 3.5vw, 1rem);
+      color: var(--gray-600);
       cursor: pointer;
-      padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2vw, 16px);
+      padding: clamp(4px, 1.2vw, 8px) clamp(10px, 2vw, 16px);
       border-radius: var(--radius-full);
       transition: var(--transition);
-      position: relative;
       white-space: nowrap;
     }
-    .nav-item:hover {
-      color: var(--primary);
-      background: var(--gray-100);
-    }
-    .nav-item.active {
-      color: var(--primary);
-      background: rgba(255, 56, 92, 0.1);
-    }
-    .nav-item.active::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--primary);
-    }
+    .nav-item:hover { color: var(--primary); background: var(--gray-100); }
+    .nav-item.active { color: var(--primary); background: rgba(255, 56, 92, 0.1); }
 
-    /* Search container (optimized for mobile) */
     .search-container {
       position: relative;
-      max-width: min(300px, 100%);
+      max-width: 300px;
       width: 100%;
     }
     .search-input-wrapper {
@@ -76,33 +121,41 @@
       background: var(--gray-100);
       border: 1px solid var(--gray-200);
       border-radius: var(--radius-full);
-      padding: 2px 2px 2px clamp(12px, 3vw, 16px);
+      padding: 2px 2px 2px 16px;
       transition: var(--transition);
+    }
+    .search-input-wrapper:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 56, 92, 0.1);
+      background: white;
     }
     .search-input {
       flex: 1;
       border: none;
       outline: none;
-      padding: clamp(6px, 2vw, 8px) 0;
-      font-size: clamp(0.85rem, 3.5vw, 0.95rem);
       background: transparent;
+      padding: 8px 0;
       min-width: 120px;
+      font-size: 0.95rem;
     }
     .search-btn-small {
       background: var(--primary);
       border: none;
       border-radius: var(--radius-full);
-      width: clamp(32px, 8vw, 36px);
-      height: clamp(32px, 8vw, 36px);
+      width: 36px;
+      height: 36px;
       color: white;
       cursor: pointer;
-      transition: var(--transition);
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: var(--transition);
+    }
+    .search-btn-small:hover {
+      background: var(--primary-dark);
+      transform: scale(1.05);
     }
 
-    /* Live search results */
     .live-search-results {
       position: absolute;
       top: 100%;
@@ -112,7 +165,7 @@
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-lg);
       margin-top: 8px;
-      max-height: min(400px, 80vh);
+      max-height: 400px;
       overflow-y: auto;
       z-index: 1000;
       display: none;
@@ -121,163 +174,288 @@
     .search-result-item {
       display: flex;
       align-items: center;
-      gap: clamp(8px, 2vw, 12px);
-      padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 16px);
+      gap: 12px;
+      padding: 12px 16px;
       border-bottom: 1px solid var(--gray-200);
       cursor: pointer;
       transition: var(--transition);
     }
+    .search-result-item:hover {
+      background: var(--gray-100);
+    }
     .result-avatar {
-      width: clamp(32px, 8vw, 40px);
-      height: clamp(32px, 8vw, 40px);
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       object-fit: cover;
     }
     .result-icon {
-      width: clamp(32px, 8vw, 40px);
-      height: clamp(32px, 8vw, 40px);
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: var(--gray-100);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: clamp(1rem, 4vw, 1.2rem);
+      font-size: 1.2rem;
       color: var(--primary);
+    }
+    .result-info {
+      flex: 1;
     }
     .result-title {
       font-weight: 600;
-      font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+      font-size: 0.95rem;
       margin-bottom: 2px;
     }
     .result-subtitle {
-      font-size: clamp(0.7rem, 3vw, 0.8rem);
+      font-size: 0.8rem;
       color: var(--gray-500);
     }
     .result-badge {
-      font-size: clamp(0.6rem, 2.5vw, 0.7rem);
-      padding: 2px clamp(4px, 1.5vw, 8px);
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      background: var(--gray-100);
+      color: var(--gray-600);
     }
 
-    /* Location banner (preserved style) */
+    .header-actions {
+      display: flex;
+      align-items: center;
+    }
+    .btn-icon {
+      background: var(--gray-100);
+      border: none;
+      border-radius: var(--radius-full);
+      width: 44px;
+      height: 44px;
+      font-size: 1.2rem;
+      color: var(--gray-700);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    .btn-icon:hover {
+      background: var(--gray-200);
+      transform: scale(1.05);
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: clamp(24px, 6vw, 48px) 0 16px;
+    }
+    .hero h1 { font-weight: 700; letter-spacing: -0.02em; }
+    .hero h1 span { color: var(--primary); }
+    .hero p { color: var(--gray-500); font-size: 1.2rem; }
+
     .location-banner {
       background: var(--gray-100);
       border: 1px solid var(--gray-200);
       border-radius: var(--radius-lg);
-      padding: clamp(12px, 3vw, 16px) clamp(16px, 4vw, 20px);
-      margin: clamp(16px, 4vw, 20px) 0 clamp(24px, 5vw, 30px);
+      padding: clamp(12px, 3vw, 18px) clamp(16px, 4vw, 24px);
+      margin: 16px 0 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: clamp(8px, 2vw, 12px);
+      gap: 12px;
     }
     .location-text {
       display: flex;
       align-items: center;
-      gap: clamp(8px, 2vw, 12px);
+      gap: 12px;
     }
-    .location-text i {
-      font-size: clamp(1.2rem, 5vw, 1.5rem);
-      color: var(--primary);
-    }
-    .location-text div strong {
-      font-size: clamp(0.9rem, 4vw, 1rem);
-    }
-    .location-text div p {
-      font-size: clamp(0.75rem, 3vw, 0.85rem);
-    }
+    .location-text i { font-size: 1.8rem; color: var(--primary); }
+    .location-text div strong { font-size: 1rem; }
+    .location-text div p { font-size: 0.85rem; color: var(--gray-600); }
     .location-btn-small {
       background: var(--primary);
       color: white;
       border: none;
       border-radius: var(--radius-full);
-      padding: clamp(6px, 2vw, 8px) clamp(16px, 4vw, 20px);
+      padding: 8px 20px;
       font-weight: 500;
-      font-size: clamp(0.8rem, 3.5vw, 0.9rem);
       cursor: pointer;
       white-space: nowrap;
+      transition: var(--transition);
+    }
+    .location-btn-small:hover {
+      background: var(--primary-dark);
+      transform: scale(1.02);
     }
 
-    /* Section headers */
     .section-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin: clamp(24px, 6vw, 40px) 0 clamp(16px, 4vw, 20px);
+      margin: 32px 0 16px;
     }
-    .section-header h2 {
-      display: flex;
-      align-items: center;
-      gap: clamp(4px, 1.5vw, 8px);
+    .section-header h2 { 
+      display: flex; 
+      align-items: center; 
+      gap: 8px;
+      font-size: 1.6rem;
     }
-    .section-header h2 i {
-      font-size: clamp(1.2rem, 5vw, 1.8rem);
+    .section-header h2 i { 
+      color: var(--primary);
+      font-size: 1.8rem;
     }
     .section-link {
-      font-size: clamp(0.8rem, 3.5vw, 0.95rem);
-      white-space: nowrap;
+      color: var(--primary);
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    .section-link:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
     }
 
-    /* Category chips */
     .category-chips {
       display: flex;
-      gap: clamp(8px, 2vw, 12px);
+      gap: 12px;
       overflow-x: auto;
-      padding: clamp(12px, 3vw, 16px) 0 clamp(16px, 4vw, 20px);
+      padding: 16px 0 20px;
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
+    .category-chips::-webkit-scrollbar {
+      display: none;
+    }
     .category-chip {
-      padding: clamp(6px, 2vw, 8px) clamp(16px, 4vw, 20px);
+      padding: 8px 20px;
       background: var(--gray-100);
       border: 1px solid var(--gray-200);
       border-radius: var(--radius-full);
       white-space: nowrap;
       font-weight: 500;
-      font-size: clamp(0.8rem, 3.5vw, 0.9rem);
       cursor: pointer;
+      transition: var(--transition);
+    }
+    .category-chip:hover {
+      background: var(--gray-200);
+    }
+    .category-chip.active { 
+      background: var(--primary); 
+      color: white; 
+      border-color: var(--primary);
     }
 
-    /* Card grid - responsive columns */
     .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
-      gap: clamp(16px, 4vw, 24px);
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(16px, 3vw, 24px);
+      margin-bottom: 32px;
     }
-
-    /* Auth dropdown */
-    .auth-dropdown {
+    .card {
+      flex: 1 1 calc(25% - 24px);
+      min-width: 200px;
+      max-width: 100%;
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: var(--transition);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+    .card:hover { 
+      transform: translateY(-4px); 
+      box-shadow: var(--shadow-md);
+    }
+    .card-image {
       position: relative;
+      aspect-ratio: 1 / 1;
+      background: var(--gray-100);
     }
-    .auth-menu {
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .card-badge { 
+      position: absolute; 
+      top: 12px; 
+      right: 12px; 
+      background: white;
+      padding: 4px 8px;
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-sm);
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-verified { color: #3b82f6; }
+    .card-content { padding: 16px; }
+    .card-title { 
+      font-weight: 600; 
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .card-subtitle { 
+      color: var(--gray-500); 
+      margin-bottom: 8px;
+    }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+    }
+    .card-rating { 
+      display: flex; 
+      align-items: center; 
+      gap: 4px; 
+    }
+    .card-rating i { color: #fbbf24; }
+
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .status-available { background: #e6f7e6; color: #2e7d32; }
+    .status-working { background: #fff4e5; color: #ef6c00; }
+    .status-unavailable { background: #ffe5e5; color: #c62828; }
+
+    .auth-dropdown { position: relative; }
+    .auth-menu, .login-form {
       position: absolute;
       top: 100%;
       right: 0;
       background: white;
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-lg);
-      min-width: min(280px, 90vw);
+      min-width: 280px;
       margin-top: 12px;
-      padding: clamp(12px, 3vw, 16px);
+      padding: 16px;
       z-index: 1000;
       display: none;
       border: 1px solid var(--gray-200);
     }
+    .auth-menu.show, .login-form.show { display: block; }
     .auth-option {
-      padding: clamp(12px, 3vw, 16px);
+      padding: 16px;
       border: 2px solid var(--gray-200);
       border-radius: var(--radius-md);
       margin-bottom: 12px;
+      cursor: pointer;
+      transition: var(--transition);
     }
-    .auth-option h4 {
-      font-size: clamp(0.9rem, 4vw, 1rem);
-      margin-bottom: 4px;
-    }
-    .auth-option p {
-      font-size: clamp(0.75rem, 3vw, 0.85rem);
-    }
+    .auth-option:hover { border-color: var(--primary); }
+    .auth-option h4 { margin-bottom: 4px; }
+    .auth-option p { font-size: 0.85rem; color: var(--gray-500); }
 
-    /* Login form */
     .login-tabs {
       display: flex;
       gap: 8px;
@@ -285,115 +463,201 @@
     }
     .login-tab {
       flex: 1;
-      padding: clamp(8px, 2vw, 10px);
-      font-size: clamp(0.8rem, 3.5vw, 0.9rem);
+      padding: 8px;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-md);
+      background: white;
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    .login-tab.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
     }
 
-    /* Image upload */
-    .image-upload-area {
-      padding: clamp(16px, 4vw, 20px);
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-full);
+      padding: 8px 20px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
     }
-    .image-preview {
-      width: clamp(60px, 15vw, 80px);
-      height: clamp(60px, 15vw, 80px);
+    .btn-outline:hover {
+      background: var(--gray-100);
     }
 
-    /* Modal adjustments for mobile */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 16px;
+    }
     .modal-card {
-      padding: clamp(20px, 5vw, 32px);
-      max-width: min(500px, 95vw);
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
     }
+    .modal-header { margin-bottom: 20px; }
+    .modal-header h2 { margin-bottom: 4px; }
+    .modal-header p { color: var(--gray-500); }
 
-    /* Header responsive */
-    .sticky-header {
-      padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 20px);
-      gap: clamp(8px, 2vw, 12px);
-    }
-    .logo {
-      font-size: clamp(1.2rem, 5vw, 1.5rem);
-    }
-    .logo i {
-      font-size: clamp(1.4rem, 6vw, 1.8rem);
-    }
-    .btn-icon {
-      width: clamp(36px, 9vw, 44px);
-      height: clamp(36px, 9vw, 44px);
-      font-size: clamp(1rem, 4vw, 1.2rem);
-    }
+    .hidden { display: none !important; }
 
-    /* Hero section (FULLY RESTORED) */
-    .hero {
+    .account-grid {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .account-card {
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 20px;
       text-align: center;
-      padding: clamp(24px, 6vw, 40px) 0;
+      cursor: pointer;
+      transition: var(--transition);
     }
-    .hero h1 {
-      font-size: clamp(2rem, 8vw, 2.5rem);
-      font-weight: 700;
-      margin-bottom: clamp(8px, 3vw, 16px);
-      letter-spacing: -0.02em;
+    .account-card:hover { border-color: var(--primary); }
+    .account-card.selected {
+      border-color: var(--primary);
+      background: rgba(255, 56, 92, 0.02);
+      position: relative;
     }
-    .hero h1 span {
+    .account-card.selected::after {
+      content: '✓';
+      position: absolute;
+      top: 12px;
+      right: 12px;
       color: var(--primary);
+      font-weight: 700;
     }
-    .hero p {
-      font-size: clamp(1rem, 4vw, 1.2rem);
+    .account-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .image-upload-area {
+      border: 2px dashed var(--gray-300);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .image-upload-area:hover {
+      border-color: var(--primary);
+      background: var(--gray-50);
+    }
+    .image-preview { 
+      width: 80px; 
+      height: 80px; 
+      object-fit: cover; 
+      border-radius: 50%; 
+      display: none; 
+      margin: 0 auto 12px;
+    }
+    .image-preview.show { display: block; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .form-input, .form-select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 56, 92, 0.1);
+    }
+    .form-help {
+      font-size: 0.8rem;
       color: var(--gray-500);
+      margin-top: 4px;
     }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius-full);
+      padding: 14px 24px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: var(--transition);
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: scale(1.02);
+    }
+    .text-center { text-align: center; }
+    .mt-4 { margin-top: 16px; }
 
-    /* Search section (original preserved) */
-    .search-section {
-      margin: clamp(16px, 4vw, 20px) 0 clamp(24px, 6vw, 40px);
+    .spinner { 
+      border: 4px solid var(--gray-200); 
+      border-top-color: var(--primary); 
+      border-radius: 50%; 
+      width: 48px; 
+      height: 48px; 
+      animation: spin 1s linear infinite; 
+      margin: 32px auto; 
     }
-    .search-tabs {
-      gap: clamp(8px, 2vw, 12px);
-    }
-    .search-tab {
-      padding: clamp(8px, 2vw, 10px) clamp(16px, 4vw, 24px);
-      font-size: clamp(0.85rem, 3.5vw, 1rem);
-    }
-    .search-bar {
-      gap: clamp(8px, 2vw, 12px);
-    }
-    .search-select {
-      min-width: min(160px, 100%);
-      padding: clamp(12px, 3vw, 14px) clamp(16px, 4vw, 20px);
-      font-size: clamp(0.85rem, 3.5vw, 1rem);
-    }
-    .search-btn {
-      padding: clamp(12px, 3vw, 14px) clamp(20px, 5vw, 32px);
-      font-size: clamp(0.85rem, 3.5vw, 1rem);
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Hide main nav on small screens */
-    @media (max-width: 640px) {
-      .main-nav {
-        display: none;
-      }
-      .search-container {
-        max-width: 100%;
-      }
+    @media (max-width: 768px) {
+      .card { flex: 1 1 calc(50% - 16px); }
+      .main-nav { display: none; }
+      .section-header h2 { font-size: 1.4rem; }
+      .section-header h2 i { font-size: 1.6rem; }
+    }
+    @media (max-width: 480px) {
+      .card { flex: 1 1 100%; }
+      .sticky-header { flex-wrap: wrap; }
+      .search-container { max-width: 100%; order: 3; }
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
     }
   </style>
 </head>
 <body>
+  <!-- Header (unchanged) -->
   <header class="sticky-header">
     <div class="logo" onclick="location.href='/'">
       <i class="fas fa-briefcase"></i>
       <span>Kazi</span> ni Kazi
     </div>
 
-    <!-- Main Navigation (Services, Jobs, Companies) -->
     <nav class="main-nav">
-      <div class="nav-item active" onclick="switchTab('services')">Services</div>
-      <div class="nav-item" onclick="switchTab('jobs')">Jobs</div>
-      <div class="nav-item" onclick="switchTab('companies')">Companies</div>
+      <div class="nav-item active" onclick="KaziModules.UI.switchTab('freelancers')">Freelancers</div>
+      <div class="nav-item" onclick="KaziModules.UI.switchTab('jobs')">Jobs</div>
+      <div class="nav-item" onclick="KaziModules.UI.switchTab('companies')">Companies</div>
     </nav>
 
-    <!-- Search Bar -->
     <div class="search-container">
       <div class="search-input-wrapper">
-        <input type="text" class="search-input" id="searchInput" placeholder="Search workers, jobs, companies..." autocomplete="off">
-        <button class="search-btn-small" onclick="performSearch()">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search freelancers, jobs..." autocomplete="off">
+        <button class="search-btn-small" onclick="KaziModules.Search.performSearch()">
           <i class="fas fa-search"></i>
         </button>
       </div>
@@ -402,36 +666,34 @@
 
     <div class="header-actions">
       <div class="auth-dropdown">
-        <button class="btn-icon" id="authBtn" onclick="toggleAuthMenu()">
+        <button class="btn-icon" id="authBtn" onclick="KaziModules.Auth.toggleAuthMenu()">
           <i class="fas fa-user"></i>
         </button>
         
-        <!-- Auth Dropdown Menu -->
         <div class="auth-menu" id="authMenu">
-          <div class="auth-option" onclick="showAccountType('worker')">
-            <h4><i class="fas fa-hard-hat" style="color: var(--primary);"></i> I'm a Worker</h4>
+          <div class="auth-option" onclick="KaziModules.Auth.showAccountType('freelancer')">
+            <h4><i class="fas fa-hard-hat" style="color: var(--primary);"></i> I'm a Freelancer</h4>
             <p>Find jobs and get hired</p>
           </div>
-          <div class="auth-option" onclick="showAccountType('company')">
+          <div class="auth-option" onclick="KaziModules.Auth.showAccountType('company')">
             <h4><i class="fas fa-building" style="color: var(--primary);"></i> I'm a Company</h4>
-            <p>Post jobs and hire workers</p>
+            <p>Post jobs and hire freelancers</p>
           </div>
-          <div class="auth-option" onclick="showAccountType('user')">
+          <div class="auth-option" onclick="KaziModules.Auth.showAccountType('user')">
             <h4><i class="fas fa-user" style="color: var(--primary);"></i> I'm a User</h4>
             <p>Browse and hire for personal projects</p>
           </div>
           <div style="text-align: center; margin-top: 12px;">
-            <button class="btn-outline" style="width: auto; padding: 8px 20px;" onclick="showLoginForm()">Login</button>
+            <button class="btn-outline" style="width: auto; padding: 8px 20px;" onclick="KaziModules.Auth.showLoginForm()">Login</button>
           </div>
         </div>
 
-        <!-- Login Form -->
         <div class="login-form" id="loginForm">
           <div class="login-tabs">
-            <button class="login-tab active" onclick="setLoginRole('worker')">Worker</button>
-            <button class="login-tab" onclick="setLoginRole('company')">Company</button>
+            <button class="login-tab active" onclick="KaziModules.Auth.setLoginRole('freelancer')">Freelancer</button>
+            <button class="login-tab" onclick="KaziModules.Auth.setLoginRole('company')">Company</button>
           </div>
-          <form onsubmit="handleLogin(event)">
+          <form onsubmit="KaziModules.Auth.handleLogin(event)">
             <div class="form-group">
               <input type="email" id="loginEmail" placeholder="Email" class="form-input" required>
             </div>
@@ -441,7 +703,7 @@
             <button type="submit" class="btn-primary">Login</button>
           </form>
           <p class="text-center mt-4">
-            <a href="#" onclick="showSignupForm()">Create an account</a>
+            <a href="#" onclick="KaziModules.Auth.showSignupForm()">Create an account</a>
           </p>
         </div>
       </div>
@@ -449,72 +711,45 @@
   </header>
 
   <main class="container">
-    <!-- RESTORED ORIGINAL HERO SECTION -->
     <section class="hero">
       <h1>Find work. Hire talent.<br><span>In Rwanda.</span></h1>
-      <p>Connect with verified workers and companies in your area</p>
+      <p>Connect with verified freelancers and companies in your area</p>
     </section>
 
-    <!-- Location Request Banner -->
     <div class="location-banner" id="locationBanner">
       <div class="location-text">
         <i class="fas fa-map-marker-alt"></i>
         <div>
-          <strong>Find services near you</strong>
-          <p>Allow location access to see nearby workers and jobs</p>
+          <strong>Find freelancers near you</strong>
+          <p>Allow location access to see nearby freelancers and jobs</p>
         </div>
       </div>
-      <button class="location-btn-small" onclick="requestLocation()">Enable Location</button>
+      <button class="location-btn-small" onclick="KaziModules.Location.requestLocation()">Enable Location</button>
     </div>
 
-    <!-- ORIGINAL SEARCH SECTION (PRESERVED) -->
-    <div class="search-section">
-      <div class="search-tabs">
-        <button class="search-tab active" onclick="filterBrowse('workers')">Workers</button>
-        <button class="search-tab" onclick="filterBrowse('companies')">Companies</button>
-      </div>
-      <div class="search-bar">
-        <select id="filterDistrict" class="search-select">
-          <option value="">All Districts</option>
-        </select>
-        <select id="filterCategory" class="search-select">
-          <option value="">All Categories</option>
-        </select>
-        <button class="search-btn" onclick="applyFilters()">
-          <i class="fas fa-search"></i> Search
-        </button>
-      </div>
-    </div>
-
-    <!-- Services Section (default visible) -->
-    <div id="servicesSection">
-      <!-- Most Used Section -->
+    <div id="freelancersSection">
       <div class="section-header">
-        <h2><i class="fas fa-fire"></i> Most Used Services</h2>
-        <span class="section-link" onclick="loadMore('most')">View all →</span>
+        <h2><i class="fas fa-fire"></i> Most Used Freelancers</h2>
+        <span class="section-link" onclick="KaziModules.UI.loadMore('most')">View all →</span>
       </div>
       <div id="mostUsedGrid" class="card-grid"></div>
 
-      <!-- Recent Section -->
       <div class="section-header">
         <h2><i class="fas fa-clock"></i> Recently Active</h2>
-        <span class="section-link" onclick="loadMore('recent')">View all →</span>
+        <span class="section-link" onclick="KaziModules.UI.loadMore('recent')">View all →</span>
       </div>
       <div id="recentGrid" class="card-grid"></div>
 
-      <!-- Suggested For You -->
       <div class="section-header">
         <h2><i class="fas fa-magic"></i> Suggested For You</h2>
-        <span class="section-link" onclick="loadMore('suggested')">View all →</span>
+        <span class="section-link" onclick="KaziModules.UI.loadMore('suggested')">View all →</span>
       </div>
       <div id="suggestedGrid" class="card-grid"></div>
 
-      <!-- Category Chips -->
       <div class="category-chips" id="categoryChips"></div>
       <div id="categoryResults" class="card-grid"></div>
     </div>
 
-    <!-- Jobs Section (hidden by default) -->
     <div id="jobsSection" style="display: none;">
       <div class="section-header">
         <h2><i class="fas fa-briefcase"></i> Available Jobs</h2>
@@ -522,7 +757,6 @@
       <div id="jobsGrid" class="card-grid"></div>
     </div>
 
-    <!-- Companies Section (hidden by default) -->
     <div id="companiesSection" style="display: none;">
       <div class="section-header">
         <h2><i class="fas fa-building"></i> Trusted Companies</h2>
@@ -533,7 +767,7 @@
     <div id="loadingSpinner" class="spinner hidden"></div>
   </main>
 
-  <!-- Auth Modal (Original) -->
+  <!-- Auth Modal -->
   <div id="authModal" class="modal-overlay hidden">
     <div class="modal-card">
       <div class="modal-header">
@@ -542,25 +776,25 @@
       </div>
       <div class="modal-body">
         <div class="account-grid">
-          <div class="account-card" onclick="selectRole('worker')" id="role-worker">
+          <div class="account-card" onclick="KaziModules.Auth.selectRole('freelancer')" id="role-freelancer">
             <i class="fas fa-hard-hat account-icon"></i>
-            <h3>Worker</h3>
+            <h3>Freelancer</h3>
             <p>Find jobs, showcase skills, get hired</p>
           </div>
-          <div class="account-card" onclick="selectRole('company')" id="role-company">
+          <div class="account-card" onclick="KaziModules.Auth.selectRole('company')" id="role-company">
             <i class="fas fa-building account-icon"></i>
             <h3>Company</h3>
-            <p>Post jobs, hire workers, build your team</p>
+            <p>Post jobs, hire freelancers, build your team</p>
           </div>
-          <div class="account-card" onclick="selectRole('user')" id="role-user">
+          <div class="account-card" onclick="KaziModules.Auth.selectRole('user')" id="role-user">
             <i class="fas fa-user account-icon"></i>
             <h3>User</h3>
             <p>Browse and hire for personal projects</p>
           </div>
         </div>
 
-        <form id="authForm" onsubmit="handleAuth(event)" class="hidden">
-          <h3 id="authFormTitle">Create Worker Account</h3>
+        <form id="authForm" onsubmit="KaziModules.Auth.handleAuth(event)" class="hidden">
+          <h3 id="authFormTitle">Create Freelancer Account</h3>
           <div class="form-group">
             <input type="text" id="fullName" placeholder="Full name" class="form-input" required>
           </div>
@@ -576,50 +810,50 @@
           </div>
           <button type="submit" class="btn-primary" id="authSubmit">Create Account</button>
           <p class="text-center mt-4">
-            <a href="#" onclick="toggleAuthMode()">Already have an account? Sign in</a>
+            <a href="#" onclick="KaziModules.Auth.toggleAuthMode()">Already have an account? Sign in</a>
           </p>
         </form>
       </div>
     </div>
   </div>
 
-  <!-- Worker Signup Modal -->
-  <div id="workerSignupModal" class="modal-overlay hidden">
+  <!-- Freelancer Signup Modal -->
+  <div id="freelancerSignupModal" class="modal-overlay hidden">
     <div class="modal-card">
-      <h2>Worker Registration</h2>
-      <form onsubmit="registerWorker(event)">
+      <h2>Freelancer Registration</h2>
+      <form onsubmit="KaziModules.Registration.registerFreelancer(event)">
         <div class="form-group">
           <label class="form-label">Full Name</label>
-          <input type="text" id="workerName" class="form-input" required>
+          <input type="text" id="freelancerName" class="form-input" required>
         </div>
         <div class="form-group">
           <label class="form-label">Profile Picture</label>
-          <div class="image-upload-area" onclick="document.getElementById('workerImage').click()">
-            <img id="workerImagePreview" class="image-preview">
+          <div class="image-upload-area" onclick="document.getElementById('freelancerImage').click()">
+            <img id="freelancerImagePreview" class="image-preview">
             <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: var(--primary);"></i>
             <p>Click to upload</p>
           </div>
-          <input type="file" id="workerImage" accept="image/*" style="display: none;" onchange="previewImage(this, 'workerImagePreview')">
+          <input type="file" id="freelancerImage" accept="image/*" style="display: none;" onchange="KaziModules.Utils.previewImage(this, 'freelancerImagePreview')">
         </div>
         <div class="form-group">
           <label class="form-label">Phone</label>
-          <input type="tel" id="workerPhone" class="form-input" required>
+          <input type="tel" id="freelancerPhone" class="form-input" required>
         </div>
         <div class="form-group">
           <label class="form-label">Email</label>
-          <input type="email" id="workerEmail" class="form-input" required>
+          <input type="email" id="freelancerEmail" class="form-input" required>
         </div>
         <div class="form-group">
           <label class="form-label">Password</label>
-          <input type="password" id="workerPassword" class="form-input" required>
+          <input type="password" id="freelancerPassword" class="form-input" required>
         </div>
         <div class="form-group">
           <label class="form-label">District</label>
-          <select id="workerDistrict" class="form-select" required></select>
+          <select id="freelancerDistrict" class="form-select" required></select>
         </div>
         <div class="form-group">
           <label class="form-label">Job Category</label>
-          <select id="workerCategory" class="form-select" required></select>
+          <select id="freelancerCategory" class="form-select" required></select>
         </div>
         <button type="submit" class="btn-primary">Register</button>
       </form>
@@ -630,7 +864,7 @@
   <div id="companySignupModal" class="modal-overlay hidden">
     <div class="modal-card">
       <h2>Company Registration</h2>
-      <form onsubmit="registerCompany(event)">
+      <form onsubmit="KaziModules.Registration.registerCompany(event)">
         <div class="form-group">
           <label class="form-label">Company Name</label>
           <input type="text" id="companyName" class="form-input" required>
@@ -642,7 +876,7 @@
             <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: var(--primary);"></i>
             <p>Click to upload</p>
           </div>
-          <input type="file" id="companyLogo" accept="image/*" style="display: none;" onchange="previewImage(this, 'logoPreview')">
+          <input type="file" id="companyLogo" accept="image/*" style="display: none;" onchange="KaziModules.Utils.previewImage(this, 'logoPreview')">
         </div>
         <div class="form-group">
           <label class="form-label">Phone</label>
@@ -669,7 +903,7 @@
   <div id="userSignupModal" class="modal-overlay hidden">
     <div class="modal-card">
       <h2>User Registration</h2>
-      <form onsubmit="registerUser(event)">
+      <form onsubmit="KaziModules.Registration.registerUser(event)">
         <div class="form-group">
           <label class="form-label">Unique Username</label>
           <input type="text" id="userName" class="form-input" required>
@@ -689,836 +923,851 @@
   </div>
 
   <script type="module">
-    // [SAME JAVASCRIPT CODE FROM PREVIOUS VERSION - KEPT INTACT]
-    // Import Firebase config and all functionality remains exactly the same
-    import { auth, db, deviceId, sessionId, IMGBB_API_KEY, IMGBB_URL, showToast } from './firebase-cfg.js';
-    import { 
-      signInWithEmailAndPassword, 
-      createUserWithEmailAndPassword,
-      onAuthStateChanged 
-    } from 'https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js';
-    import { 
-      collection, getDocs, query, where, doc, setDoc, addDoc, orderBy, limit, updateDoc 
-    } from 'https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js';
+    // ==================== GLOBAL NAMESPACE ====================
+    window.KaziModules = {};
 
-    // ==================== STATE MANAGEMENT ====================
-    let currentTab = 'services';
-    let userLocation = null;
-    let allWorkers = [];
-    let allCompanies = [];
-    let allJobs = [];
-    let allCategories = [];
-    let userInterests = JSON.parse(localStorage.getItem('userInterests')) || [];
-    let searchTimeout = null;
-    let selectedRole = null;
-    let isLogin = false;
-    let loginRole = 'worker';
-
-    // ==================== TRACKING SYSTEM ====================
-    class UserTracker {
-      constructor() {
-        this.startTime = Date.now();
-        this.interactions = JSON.parse(localStorage.getItem('interactions')) || [];
-      }
-
-      trackEvent(type, data) {
-        const event = {
-          type,
-          data,
-          timestamp: new Date().toISOString(),
-          sessionId,
-          deviceId
-        };
-        this.interactions.push(event);
-        localStorage.setItem('interactions', JSON.stringify(this.interactions.slice(-100)));
+    // ==================== MODULE: FIREBASE INIT ====================
+    (function() {
+      console.log('🔥 Initializing Firebase...');
+      
+      import('./firebase-cfg.js').then(module => {
+        window.KaziModules.firebase = module;
+        window.KaziModules.auth = module.auth;
+        window.KaziModules.db = module.db;
+        window.KaziModules.IMGBB_API_KEY = module.IMGBB_API_KEY;
+        window.KaziModules.IMGBB_URL = module.IMGBB_URL;
+        window.KaziModules.deviceId = module.deviceId;
+        window.KaziModules.sessionId = module.sessionId;
+        window.KaziModules.showToast = module.showToast;
         
-        if (type === 'view_profile') {
-          this.updateInterests(data.category, data.district);
-        }
-      }
-
-      updateInterests(category, district) {
-        if (category) {
-          const catInterest = userInterests.find(i => i.type === 'category' && i.value === category);
-          if (catInterest) {
-            catInterest.count = (catInterest.count || 0) + 1;
-          } else {
-            userInterests.push({ type: 'category', value: category, count: 1 });
-          }
-        }
-        if (district) {
-          const distInterest = userInterests.find(i => i.type === 'district' && i.value === district);
-          if (distInterest) {
-            distInterest.count = (distInterest.count || 0) + 1;
-          } else {
-            userInterests.push({ type: 'district', value: district, count: 1 });
-          }
-        }
-        localStorage.setItem('userInterests', JSON.stringify(userInterests.slice(-20)));
-      }
-
-      getTopInterests(type, limit = 3) {
-        return userInterests
-          .filter(i => i.type === type)
-          .sort((a, b) => (b.count || 0) - (a.count || 0))
-          .slice(0, limit);
-      }
-    }
-
-    const tracker = new UserTracker();
-
-    // ==================== LOCATION SERVICES ====================
-    window.requestLocation = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            userLocation = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            localStorage.setItem('userLocation', JSON.stringify(userLocation));
-            document.getElementById('locationBanner').style.display = 'none';
-            showToast('Location enabled! Showing nearby services', 'success');
-            loadAllData();
-          },
-          (error) => {
-            showToast('Please enable location for better results', 'info');
-          }
-        );
-      }
-    };
-
-    // Load saved location
-    const savedLocation = localStorage.getItem('userLocation');
-    if (savedLocation) {
-      userLocation = JSON.parse(savedLocation);
-      document.getElementById('locationBanner').style.display = 'none';
-    }
-
-    // ==================== DISTANCE CALCULATION ====================
-    function calculateDistance(lat1, lon1, lat2, lon2) {
-      if (!lat1 || !lon1 || !lat2 || !lon2) return null;
-      const R = 6371;
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLon = (lon2 - lon1) * Math.PI / 180;
-      const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-                Math.sin(dLon/2) * Math.sin(dLon/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      return R * c;
-    }
-
-    // ==================== SMART ALGORITHMS ====================
-    function getMostUsed() {
-      return [...allWorkers]
-        .sort((a, b) => {
-          const scoreA = (a.views || 0) * 0.3 + (a.avgRating || 0) * 0.5 + (a.verified ? 1 : 0) * 0.2;
-          const scoreB = (b.views || 0) * 0.3 + (b.avgRating || 0) * 0.5 + (b.verified ? 1 : 0) * 0.2;
-          return scoreB - scoreA;
-        })
-        .slice(0, 8);
-    }
-
-    function getRecent() {
-      return [...allWorkers]
-        .sort((a, b) => {
-          if (a.status === 'Available' && b.status !== 'Available') return -1;
-          if (a.status !== 'Available' && b.status === 'Available') return 1;
-          return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
-        })
-        .slice(0, 8);
-    }
-
-    function getSuggested() {
-      let scored = allWorkers.map(worker => {
-        let score = 0;
-        
-        if (userLocation && worker.lat && worker.lng) {
-          const distance = calculateDistance(
-            userLocation.lat, userLocation.lng,
-            worker.lat, worker.lng
-          );
-          if (distance !== null) {
-            score += Math.max(0, 30 * (1 - Math.min(distance, 50) / 50));
-          }
-        }
-        
-        const topCategories = tracker.getTopInterests('category');
-        if (worker.jobCategory) {
-          const match = topCategories.find(c => c.value === worker.jobCategory);
-          if (match) score += 20 * (match.count / 5);
-        }
-        
-        const topDistricts = tracker.getTopInterests('district');
-        if (worker.district) {
-          const match = topDistricts.find(d => d.value === worker.district);
-          if (match) score += 20 * (match.count / 5);
-        }
-        
-        score += (worker.avgRating || 0) * 3;
-        if (worker.verified) score += 15;
-        
-        return { worker, score };
+        // Initialize app after Firebase is ready
+        KaziModules.App.init();
+      }).catch(error => {
+        console.error('Firebase initialization failed:', error);
       });
-      
-      return scored
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 8)
-        .map(s => s.worker);
-    }
+    })();
 
-    function getCategoryWorkers(category, minCount = 5) {
-      const categoryWorkers = allWorkers.filter(w => w.jobCategory === category);
-      if (categoryWorkers.length < minCount) return [];
-      
-      return categoryWorkers
-        .map(worker => {
-          let score = 0;
-          
-          if (userLocation && worker.lat && worker.lng) {
-            const distance = calculateDistance(
-              userLocation.lat, userLocation.lng,
-              worker.lat, worker.lng
-            );
-            if (distance !== null) {
-              score += 30 * (1 - Math.min(distance, 30) / 30);
-            }
-          }
-          
-          score += Math.random() * 20;
-          score += (worker.avgRating || 0) * 5;
-          if (worker.verified) score += 20;
-          
-          return { worker, score };
-        })
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 8)
-        .map(s => s.worker);
-    }
+    // ==================== MODULE: UTILITIES ====================
+    KaziModules.Utils = {
+      previewImage: (input, previewId) => {
+        if (input.files && input.files[0]) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const preview = document.getElementById(previewId);
+            preview.src = e.target.result;
+            preview.classList.add('show');
+          };
+          reader.readAsDataURL(input.files[0]);
+        }
+      },
 
-    // ==================== LIVE SEARCH ====================
-    window.performSearch = () => {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      if (query.length < 2) {
-        document.getElementById('liveSearchResults').style.display = 'none';
-        return;
-      }
-      
-      const results = [];
-      
-      allWorkers.forEach(w => {
-        if (w.fullName?.toLowerCase().includes(query) || 
-            w.jobCategory?.toLowerCase().includes(query) ||
-            w.district?.toLowerCase().includes(query)) {
-          results.push({ type: 'worker', data: w, id: w.uid });
-        }
-      });
-      
-      allCompanies.forEach(c => {
-        if (c.companyName?.toLowerCase().includes(query) ||
-            c.district?.toLowerCase().includes(query)) {
-          results.push({ type: 'company', data: c, id: c.uid });
-        }
-      });
-      
-      allJobs.forEach(j => {
-        if (j.title?.toLowerCase().includes(query) ||
-            j.description?.toLowerCase().includes(query)) {
-          results.push({ type: 'job', data: j, id: j.id });
-        }
-      });
-      
-      displaySearchResults(results.slice(0, 10));
-    };
-
-    function displaySearchResults(results) {
-      const container = document.getElementById('liveSearchResults');
-      container.innerHTML = '';
-      
-      if (results.length === 0) {
-        container.style.display = 'none';
-        return;
-      }
-      
-      results.forEach(r => {
-        const div = document.createElement('div');
-        div.className = 'search-result-item';
-        div.onclick = () => {
-          if (r.type === 'job') {
-            window.location.href = `job.html?id=${r.id}`;
-          } else {
-            window.location.href = `profile.html?id=${r.id}`;
-          }
-        };
-        
-        if (r.type === 'worker') {
-          div.innerHTML = `
-            <img src="${r.data.profilePicture || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=50'}" class="result-avatar">
-            <div class="result-info">
-              <div class="result-title">${r.data.fullName}</div>
-              <div class="result-subtitle">${r.data.jobCategory || 'Worker'} • ${r.data.district || ''}</div>
-            </div>
-            <span class="result-badge">Worker</span>
-          `;
-        } else if (r.type === 'company') {
-          div.innerHTML = `
-            <img src="${r.data.logo || 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=50'}" class="result-avatar">
-            <div class="result-info">
-              <div class="result-title">${r.data.companyName}</div>
-              <div class="result-subtitle">${r.data.district || ''}</div>
-            </div>
-            <span class="result-badge">Company</span>
-          `;
+      showSpinner: (show) => {
+        const spinner = document.getElementById('loadingSpinner');
+        if (show) {
+          spinner.classList.remove('hidden');
         } else {
-          div.innerHTML = `
-            <div class="result-icon"><i class="fas fa-briefcase"></i></div>
-            <div class="result-info">
-              <div class="result-title">${r.data.title}</div>
-              <div class="result-subtitle">${r.data.companyName || ''} • ${r.data.district || ''}</div>
-            </div>
-            <span class="result-badge">Job</span>
-          `;
+          spinner.classList.add('hidden');
         }
-        
-        container.appendChild(div);
-      });
-      
-      container.style.display = 'block';
-    }
+      },
 
-    // Debounced search
-    document.getElementById('searchInput').addEventListener('input', () => {
-      clearTimeout(searchTimeout);
-      searchTimeout = setTimeout(performSearch, 300);
-    });
+      closeModals: () => {
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+          modal.classList.add('hidden');
+        });
+      },
 
-    // Close search results when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.search-container')) {
-        document.getElementById('liveSearchResults').style.display = 'none';
+      formatCurrency: (amount) => {
+        return 'RWF ' + Number(amount || 0).toLocaleString();
+      },
+
+      getTimeAgo: (timestamp) => {
+        const seconds = Math.floor((new Date() - new Date(timestamp)) / 1000);
+        if (seconds < 60) return 'just now';
+        if (seconds < 3600) return Math.floor(seconds / 60) + ' minutes ago';
+        if (seconds < 86400) return Math.floor(seconds / 3600) + ' hours ago';
+        return Math.floor(seconds / 86400) + ' days ago';
       }
-    });
+    };
 
-    // ==================== LOAD DATA ====================
-    async function loadAllData() {
-      const spinner = document.getElementById('loadingSpinner');
-      spinner.classList.remove('hidden');
-      
-      try {
-        const workersSnap = await getDocs(query(collection(db, 'users'), where('role', '==', 'worker')));
-        allWorkers = workersSnap.docs.map(d => ({ uid: d.id, ...d.data() }));
+    // ==================== MODULE: LOCATION ====================
+    KaziModules.Location = {
+      userLocation: null,
+
+      requestLocation: function() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              this.userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              };
+              localStorage.setItem('userLocation', JSON.stringify(this.userLocation));
+              document.getElementById('locationBanner').style.display = 'none';
+              KaziModules.showToast('Location enabled! Showing nearby freelancers', 'success');
+              KaziModules.Data.loadAllData();
+            },
+            (error) => {
+              KaziModules.showToast('Please enable location for better results', 'info');
+            }
+          );
+        }
+      },
+
+      getDistance: (lat1, lon1, lat2, lon2) => {
+        if (!lat1 || !lon1 || !lat2 || !lon2) return null;
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                  Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+                  Math.sin(dLon/2) * Math.sin(dLon/2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return R * c;
+      },
+
+      init: function() {
+        const savedLocation = localStorage.getItem('userLocation');
+        if (savedLocation) {
+          this.userLocation = JSON.parse(savedLocation);
+          document.getElementById('locationBanner').style.display = 'none';
+        }
+      }
+    };
+
+    // ==================== MODULE: DATA ====================
+    KaziModules.Data = {
+      allFreelancers: [],
+      allCompanies: [],
+      allJobs: [],
+      allCategories: [],
+      allDistricts: [],
+
+      async loadAllData() {
+        KaziModules.Utils.showSpinner(true);
         
-        const companiesSnap = await getDocs(query(collection(db, 'users'), where('role', '==', 'company')));
-        allCompanies = companiesSnap.docs.map(d => ({ uid: d.id, ...d.data() }));
+        try {
+          const { db } = KaziModules;
+          
+          // Load freelancers
+          const freelancersSnap = await KaziModules.firebase.getDocs(
+            KaziModules.firebase.query(
+              KaziModules.firebase.collection(db, 'users'), 
+              KaziModules.firebase.where('role', '==', 'freelancer')
+            )
+          );
+          this.allFreelancers = freelancersSnap.docs.map(d => ({ uid: d.id, ...d.data() }));
+          
+          // Load companies
+          const companiesSnap = await KaziModules.firebase.getDocs(
+            KaziModules.firebase.query(
+              KaziModules.firebase.collection(db, 'users'), 
+              KaziModules.firebase.where('role', '==', 'company')
+            )
+          );
+          this.allCompanies = companiesSnap.docs.map(d => ({ uid: d.id, ...d.data() }));
+          
+          // Load jobs
+          const jobsSnap = await KaziModules.firebase.getDocs(
+            KaziModules.firebase.collection(db, 'jobs')
+          );
+          this.allJobs = jobsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+          
+          // Load categories
+          const categoriesSnap = await KaziModules.firebase.getDocs(
+            KaziModules.firebase.collection(db, 'categories')
+          );
+          this.allCategories = categoriesSnap.docs.map(d => d.data().name);
+          
+          // Load districts
+          const districtsSnap = await KaziModules.firebase.getDocs(
+            KaziModules.firebase.collection(db, 'districts')
+          );
+          this.allDistricts = districtsSnap.docs.map(d => d.data().name);
+          
+          // Populate dropdowns
+          KaziModules.UI.populateDropdowns();
+          
+          // Render sections
+          KaziModules.Render.renderCurrentTab();
+          KaziModules.Render.renderCategoryChips();
+          
+        } catch (error) {
+          console.error('Error loading data:', error);
+          KaziModules.showToast('Error loading data', 'error');
+        } finally {
+          KaziModules.Utils.showSpinner(false);
+        }
+      },
+
+      getMostUsed: function() {
+        return [...this.allFreelancers]
+          .sort((a, b) => (b.views || 0) - (a.views || 0))
+          .slice(0, 8);
+      },
+
+      getRecent: function() {
+        return [...this.allFreelancers]
+          .sort((a, b) => {
+            if (a.status === 'Available' && b.status !== 'Available') return -1;
+            if (a.status !== 'Available' && b.status === 'Available') return 1;
+            return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+          })
+          .slice(0, 8);
+      },
+
+      getSuggested: function() {
+        return [...this.allFreelancers]
+          .sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0))
+          .slice(0, 8);
+      },
+
+      getCategoryFreelancers: function(category) {
+        return this.allFreelancers.filter(f => f.jobCategory === category).slice(0, 8);
+      },
+
+      search: function(query) {
+        query = query.toLowerCase();
+        const results = [];
         
-        const jobsSnap = await getDocs(collection(db, 'jobs'));
-        allJobs = jobsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-        
-        const categoriesSnap = await getDocs(collection(db, 'categories'));
-        allCategories = categoriesSnap.docs.map(d => d.data().name).filter(c => {
-          const count = allWorkers.filter(w => w.jobCategory === c).length;
-          return count >= 5;
+        this.allFreelancers.forEach(f => {
+          if (f.fullName?.toLowerCase().includes(query) || 
+              f.jobCategory?.toLowerCase().includes(query) ||
+              f.district?.toLowerCase().includes(query)) {
+            results.push({ type: 'freelancer', data: f, id: f.uid });
+          }
         });
         
-        renderCurrentTab();
-        renderCategoryChips();
-      } catch (error) {
-        showToast('Error loading data', 'error');
+        this.allCompanies.forEach(c => {
+          if (c.companyName?.toLowerCase().includes(query) ||
+              c.district?.toLowerCase().includes(query)) {
+            results.push({ type: 'company', data: c, id: c.uid });
+          }
+        });
+        
+        this.allJobs.forEach(j => {
+          if (j.title?.toLowerCase().includes(query) ||
+              j.description?.toLowerCase().includes(query)) {
+            results.push({ type: 'job', data: j, id: j.id });
+          }
+        });
+        
+        return results.slice(0, 10);
       }
-      
-      spinner.classList.add('hidden');
-    }
-
-    function renderCurrentTab() {
-      if (currentTab === 'services') {
-        renderMostUsed();
-        renderRecent();
-        renderSuggested();
-      } else if (currentTab === 'jobs') {
-        renderJobs();
-      } else if (currentTab === 'companies') {
-        renderCompanies();
-      }
-    }
-
-    function renderMostUsed() {
-      const grid = document.getElementById('mostUsedGrid');
-      const workers = getMostUsed();
-      grid.innerHTML = workers.map(w => createWorkerCard(w)).join('');
-    }
-
-    function renderRecent() {
-      const grid = document.getElementById('recentGrid');
-      const workers = getRecent();
-      grid.innerHTML = workers.map(w => createWorkerCard(w)).join('');
-    }
-
-    function renderSuggested() {
-      const grid = document.getElementById('suggestedGrid');
-      const workers = getSuggested();
-      grid.innerHTML = workers.map(w => createWorkerCard(w)).join('');
-    }
-
-    function renderJobs() {
-      const grid = document.getElementById('jobsGrid');
-      grid.innerHTML = allJobs.map(j => createJobCard(j)).join('');
-    }
-
-    function renderCompanies() {
-      const grid = document.getElementById('companiesGrid');
-      grid.innerHTML = allCompanies.map(c => createCompanyCard(c)).join('');
-    }
-
-    function renderCategoryChips() {
-      const chips = document.getElementById('categoryChips');
-      chips.innerHTML = allCategories.map(c => `
-        <div class="category-chip" onclick="loadCategory('${c}')">${c}</div>
-      `).join('');
-    }
-
-    window.loadCategory = async (category) => {
-      document.querySelectorAll('.category-chip').forEach(chip => chip.classList.remove('active'));
-      event.target.classList.add('active');
-      
-      const workers = getCategoryWorkers(category);
-      const grid = document.getElementById('categoryResults');
-      grid.innerHTML = workers.map(w => createWorkerCard(w)).join('');
-      
-      grid.scrollIntoView({ behavior: 'smooth' });
     };
 
-    function createWorkerCard(worker) {
-      return `
-        <div class="card" onclick="location.href='profile.html?id=${worker.uid}'">
-          <div class="card-image">
-            <img src="${worker.profilePicture || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400'}" loading="lazy">
-            ${worker.verified ? '<span class="card-badge"><i class="fas fa-check-circle card-verified"></i></span>' : ''}
-          </div>
-          <div class="card-content">
-            <div class="card-title">${worker.fullName || 'Worker'}</div>
-            <div class="card-subtitle">${worker.jobCategory || 'General'} • ${worker.district || ''}</div>
-            <div class="card-footer">
-              <span class="card-rating">
-                <i class="fas fa-star"></i> ${(worker.avgRating || 0).toFixed(1)}
-              </span>
-              ${worker.status ? `<span class="status-badge status-${worker.status.toLowerCase().replace(' ', '-')}">${worker.status}</span>` : ''}
+    // ==================== MODULE: RENDER ====================
+    KaziModules.Render = {
+      createFreelancerCard: (freelancer) => {
+        return `
+          <div class="card" onclick="location.href='profile.html?id=${freelancer.uid}'">
+            <div class="card-image">
+              <img src="${freelancer.profilePicture || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400'}" loading="lazy">
+              ${freelancer.verified ? '<span class="card-badge"><i class="fas fa-check-circle card-verified"></i> Verified</span>' : ''}
+            </div>
+            <div class="card-content">
+              <div class="card-title">${freelancer.fullName || 'Freelancer'}</div>
+              <div class="card-subtitle">${freelancer.jobCategory || 'General'} • ${freelancer.district || ''}</div>
+              <div class="card-footer">
+                <span class="card-rating">
+                  <i class="fas fa-star"></i> ${(freelancer.avgRating || 0).toFixed(1)}
+                </span>
+                <span class="status-badge status-${(freelancer.status || 'available').toLowerCase().replace(' ', '-')}">
+                  ${freelancer.status || 'Available'}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      `;
-    }
+        `;
+      },
 
-    function createCompanyCard(company) {
-      return `
-        <div class="card" onclick="location.href='profile.html?id=${company.uid}'">
-          <div class="card-image">
-            <img src="${company.logo || 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400'}" loading="lazy">
-            ${company.verified ? '<span class="card-badge"><i class="fas fa-check-circle card-verified"></i></span>' : ''}
-          </div>
-          <div class="card-content">
-            <div class="card-title">${company.companyName || 'Company'}</div>
-            <div class="card-subtitle">${company.district || ''}</div>
-            <div class="card-footer">
-              <span class="card-rating">
-                <i class="fas fa-star"></i> ${(company.avgRating || 0).toFixed(1)}
-              </span>
-              <span>${allJobs.filter(j => j.companyId === company.uid).length} jobs</span>
+      createCompanyCard: (company) => {
+        return `
+          <div class="card" onclick="location.href='profile.html?id=${company.uid}'">
+            <div class="card-image">
+              <img src="${company.logo || 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=400'}" loading="lazy">
+              ${company.verified ? '<span class="card-badge"><i class="fas fa-check-circle card-verified"></i> Verified</span>' : ''}
+            </div>
+            <div class="card-content">
+              <div class="card-title">${company.companyName || 'Company'}</div>
+              <div class="card-subtitle">${company.district || ''}</div>
+              <div class="card-footer">
+                <span class="card-rating">
+                  <i class="fas fa-star"></i> ${(company.avgRating || 0).toFixed(1)}
+                </span>
+                <span>${KaziModules.Data.allJobs.filter(j => j.companyId === company.uid).length} jobs</span>
+              </div>
             </div>
           </div>
-        </div>
-      `;
-    }
+        `;
+      },
 
-    function createJobCard(job) {
-      return `
-        <div class="card" onclick="location.href='job.html?id=${job.id}'">
-          <div class="card-image">
-            <img src="${job.companyLogo || 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400'}" loading="lazy">
-          </div>
-          <div class="card-content">
-            <div class="card-title">${job.title}</div>
-            <div class="card-subtitle">${job.companyName || ''} • ${job.district || ''}</div>
-            <div class="card-footer">
-              <span><i class="fas fa-tag"></i> ${job.category || ''}</span>
-              <span class="card-rating">
-                <strong>RWF ${Number(job.budget || 0).toLocaleString()}</strong>
-              </span>
+      createJobCard: (job) => {
+        return `
+          <div class="card" onclick="location.href='job.html?id=${job.id}'">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400" loading="lazy">
+            </div>
+            <div class="card-content">
+              <div class="card-title">${job.title}</div>
+              <div class="card-subtitle">${job.companyName || ''} • ${job.district || ''}</div>
+              <div class="card-footer">
+                <span><i class="fas fa-tag"></i> ${job.category || ''}</span>
+                <span class="card-rating">
+                  <strong>${KaziModules.Utils.formatCurrency(job.budget)}</strong>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      `;
-    }
+        `;
+      },
 
-    // ==================== AUTH UI ====================
-    window.toggleAuthMenu = () => {
-      document.getElementById('authMenu').classList.toggle('show');
-      document.getElementById('loginForm').classList.remove('show');
-    };
+      renderMostUsed: function() {
+        const grid = document.getElementById('mostUsedGrid');
+        const freelancers = KaziModules.Data.getMostUsed();
+        grid.innerHTML = freelancers.map(f => this.createFreelancerCard(f)).join('');
+      },
 
-    window.showLoginForm = () => {
-      document.getElementById('authMenu').classList.remove('show');
-      document.getElementById('loginForm').classList.add('show');
-    };
+      renderRecent: function() {
+        const grid = document.getElementById('recentGrid');
+        const freelancers = KaziModules.Data.getRecent();
+        grid.innerHTML = freelancers.map(f => this.createFreelancerCard(f)).join('');
+      },
 
-    window.showSignupForm = () => {
-      document.getElementById('loginForm').classList.remove('show');
-      document.getElementById('authMenu').classList.add('show');
-    };
+      renderSuggested: function() {
+        const grid = document.getElementById('suggestedGrid');
+        const freelancers = KaziModules.Data.getSuggested();
+        grid.innerHTML = freelancers.map(f => this.createFreelancerCard(f)).join('');
+      },
 
-    window.showAccountType = (type) => {
-      document.getElementById('authMenu').classList.remove('show');
-      if (type === 'worker') {
-        document.getElementById('workerSignupModal').classList.remove('hidden');
-      } else if (type === 'company') {
-        document.getElementById('companySignupModal').classList.remove('hidden');
-      } else {
-        document.getElementById('userSignupModal').classList.remove('hidden');
-      }
-    };
+      renderJobs: function() {
+        const grid = document.getElementById('jobsGrid');
+        grid.innerHTML = KaziModules.Data.allJobs.map(j => this.createJobCard(j)).join('');
+      },
 
-    // ==================== REGISTRATION ====================
-    async function uploadImage(file) {
-      const formData = new FormData();
-      formData.append('image', file);
-      formData.append('key', IMGBB_API_KEY);
-      
-      const response = await fetch(IMGBB_URL, { method: 'POST', body: formData });
-      const data = await response.json();
-      return data.success ? data.data.url : null;
-    }
+      renderCompanies: function() {
+        const grid = document.getElementById('companiesGrid');
+        grid.innerHTML = KaziModules.Data.allCompanies.map(c => this.createCompanyCard(c)).join('');
+      },
 
-    window.previewImage = (input, previewId) => {
-      if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const preview = document.getElementById(previewId);
-          preview.src = e.target.result;
-          preview.classList.add('show');
-        };
-        reader.readAsDataURL(input.files[0]);
-      }
-    };
+      renderCategoryChips: function() {
+        const chips = document.getElementById('categoryChips');
+        chips.innerHTML = KaziModules.Data.allCategories.map(c => `
+          <div class="category-chip" onclick="KaziModules.UI.loadCategory('${c}')">${c}</div>
+        `).join('');
+      },
 
-    window.registerWorker = async (e) => {
-      e.preventDefault();
-      
-      const file = document.getElementById('workerImage').files[0];
-      let imageUrl = '';
-      
-      if (file) {
-        imageUrl = await uploadImage(file);
-      }
-      
-      const userCred = await createUserWithEmailAndPassword(
-        auth,
-        document.getElementById('workerEmail').value,
-        document.getElementById('workerPassword').value
-      );
-      
-      const userData = {
-        uid: userCred.user.uid,
-        fullName: document.getElementById('workerName').value,
-        profilePicture: imageUrl,
-        phone: document.getElementById('workerPhone').value,
-        email: document.getElementById('workerEmail').value,
-        district: document.getElementById('workerDistrict').value,
-        jobCategory: document.getElementById('workerCategory').value,
-        role: 'worker',
-        status: 'Available',
-        verified: false,
-        boosted: false,
-        avgRating: 0,
-        reviewCount: 0,
-        followerCount: 0,
-        views: 0,
-        portfolioImages: [],
-        createdAt: new Date().toISOString(),
-        deviceId
-      };
-      
-      await setDoc(doc(db, 'users', userCred.user.uid), userData);
-      showToast('Registration successful!', 'success');
-      document.getElementById('workerSignupModal').classList.add('hidden');
-      location.href = 'dashboard.html';
-    };
+      renderCategoryResults: function(category) {
+        const grid = document.getElementById('categoryResults');
+        const freelancers = KaziModules.Data.getCategoryFreelancers(category);
+        grid.innerHTML = freelancers.map(f => this.createFreelancerCard(f)).join('');
+      },
 
-    window.registerCompany = async (e) => {
-      e.preventDefault();
-      
-      const file = document.getElementById('companyLogo').files[0];
-      let imageUrl = '';
-      
-      if (file) {
-        imageUrl = await uploadImage(file);
-      }
-      
-      const userCred = await createUserWithEmailAndPassword(
-        auth,
-        document.getElementById('companyEmail').value,
-        document.getElementById('companyPassword').value
-      );
-      
-      const userData = {
-        uid: userCred.user.uid,
-        companyName: document.getElementById('companyName').value,
-        logo: imageUrl,
-        phone: document.getElementById('companyPhone').value,
-        email: document.getElementById('companyEmail').value,
-        district: document.getElementById('companyDistrict').value,
-        role: 'company',
-        verified: false,
-        boosted: false,
-        avgRating: 0,
-        reviewCount: 0,
-        followerCount: 0,
-        images: [],
-        createdAt: new Date().toISOString(),
-        deviceId
-      };
-      
-      await setDoc(doc(db, 'users', userCred.user.uid), userData);
-      showToast('Registration successful!', 'success');
-      document.getElementById('companySignupModal').classList.add('hidden');
-      location.href = 'dashboard.html';
-    };
-
-    window.registerUser = async (e) => {
-      e.preventDefault();
-      
-      const uniqueName = document.getElementById('userName').value;
-      
-      const q = query(collection(db, 'users'), where('uniqueName', '==', uniqueName));
-      const snap = await getDocs(q);
-      if (!snap.empty) {
-        showToast('Username already taken', 'error');
-        return;
-      }
-      
-      const userCred = await createUserWithEmailAndPassword(
-        auth,
-        document.getElementById('userEmail').value,
-        document.getElementById('userPassword').value
-      );
-      
-      const userData = {
-        uid: userCred.user.uid,
-        uniqueName,
-        email: document.getElementById('userEmail').value,
-        role: 'user',
-        deviceId,
-        createdAt: new Date().toISOString()
-      };
-      
-      await setDoc(doc(db, 'users', userCred.user.uid), userData);
-      showToast('Registration successful!', 'success');
-      document.getElementById('userSignupModal').classList.add('hidden');
-      location.href = 'dashboard.html';
-    };
-
-    // ==================== LOGIN ====================
-    window.setLoginRole = (role) => {
-      loginRole = role;
-      document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
-      event.target.classList.add('active');
-    };
-
-    window.handleLogin = async (e) => {
-      e.preventDefault();
-      
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-      
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        showToast('Login successful!', 'success');
-        location.href = 'dashboard.html';
-      } catch (error) {
-        showToast('Invalid credentials', 'error');
-      }
-    };
-
-    // ==================== NAVIGATION ====================
-    window.switchTab = (tab) => {
-      currentTab = tab;
-      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-      event.target.classList.add('active');
-      
-      document.getElementById('servicesSection').style.display = tab === 'services' ? 'block' : 'none';
-      document.getElementById('jobsSection').style.display = tab === 'jobs' ? 'block' : 'none';
-      document.getElementById('companiesSection').style.display = tab === 'companies' ? 'block' : 'none';
-      
-      if (tab === 'jobs') renderJobs();
-      if (tab === 'companies') renderCompanies();
-    };
-
-    window.loadMore = (type) => {
-      showToast(`Loading more ${type}...`, 'info');
-    };
-
-    // Original filter functions (preserved)
-    window.filterBrowse = (type) => {
-      document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
-      event.target.classList.add('active');
-      
-      // This will trigger the original filtering
-      if (type === 'workers') {
-        switchTab('services');
-      } else {
-        switchTab('companies');
-      }
-    };
-
-    window.applyFilters = () => {
-      showToast('Filters applied', 'info');
-    };
-
-    // Original auth functions (preserved for backward compatibility)
-    window.showAuthModal = () => {
-      document.getElementById('authModal').classList.remove('hidden');
-    };
-
-    window.selectRole = (role) => {
-      selectedRole = role;
-      document.querySelectorAll('.account-card').forEach(c => c.classList.remove('selected'));
-      document.getElementById(`role-${role}`).classList.add('selected');
-      
-      const form = document.getElementById('authForm');
-      form.classList.remove('hidden');
-      document.getElementById('authFormTitle').textContent = 
-        `Create ${role.charAt(0).toUpperCase() + role.slice(1)} Account`;
-      
-      document.getElementById('uniqueNameGroup').style.display = role === 'user' ? 'block' : 'none';
-    };
-
-    window.handleAuth = async (e) => {
-      e.preventDefault();
-      
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const fullName = document.getElementById('fullName').value;
-      const uniqueName = document.getElementById('uniqueName')?.value;
-      
-      if (!email || !password) {
-        showToast('Please fill all fields', 'error');
-        return;
-      }
-      
-      try {
-        if (isLogin) {
-          await signInWithEmailAndPassword(auth, email, password);
-          showToast('Logged in!', 'success');
-          document.getElementById('authModal').classList.add('hidden');
-          location.href = 'dashboard.html';
-        } else {
-          if (!selectedRole) {
-            showToast('Please select account type', 'error');
-            return;
+      renderSearchResults: function(results) {
+        const container = document.getElementById('liveSearchResults');
+        container.innerHTML = '';
+        
+        if (results.length === 0) {
+          container.style.display = 'none';
+          return;
+        }
+        
+        results.forEach(r => {
+          const div = document.createElement('div');
+          div.className = 'search-result-item';
+          div.onclick = () => {
+            if (r.type === 'job') {
+              window.location.href = `job.html?id=${r.id}`;
+            } else {
+              window.location.href = `profile.html?id=${r.id}`;
+            }
+          };
+          
+          if (r.type === 'freelancer') {
+            div.innerHTML = `
+              <img src="${r.data.profilePicture || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=50'}" class="result-avatar">
+              <div class="result-info">
+                <div class="result-title">${r.data.fullName}</div>
+                <div class="result-subtitle">${r.data.jobCategory || 'Freelancer'} • ${r.data.district || ''}</div>
+              </div>
+              <span class="result-badge">Freelancer</span>
+            `;
+          } else if (r.type === 'company') {
+            div.innerHTML = `
+              <img src="${r.data.logo || 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=50'}" class="result-avatar">
+              <div class="result-info">
+                <div class="result-title">${r.data.companyName}</div>
+                <div class="result-subtitle">${r.data.district || ''}</div>
+              </div>
+              <span class="result-badge">Company</span>
+            `;
+          } else {
+            div.innerHTML = `
+              <div class="result-icon"><i class="fas fa-briefcase"></i></div>
+              <div class="result-info">
+                <div class="result-title">${r.data.title}</div>
+                <div class="result-subtitle">${r.data.companyName || ''} • ${r.data.district || ''}</div>
+              </div>
+              <span class="result-badge">Job</span>
+            `;
           }
           
-          if (selectedRole === 'user' && uniqueName) {
-            const q = query(collection(db, 'users'), where('uniqueName', '==', uniqueName));
-            const snap = await getDocs(q);
-            if (!snap.empty) {
-              showToast('Username taken', 'error');
+          container.appendChild(div);
+        });
+        
+        container.style.display = 'block';
+      },
+
+      renderCurrentTab: function() {
+        if (KaziModules.UI.currentTab === 'freelancers') {
+          this.renderMostUsed();
+          this.renderRecent();
+          this.renderSuggested();
+        } else if (KaziModules.UI.currentTab === 'jobs') {
+          this.renderJobs();
+        } else if (KaziModules.UI.currentTab === 'companies') {
+          this.renderCompanies();
+        }
+      }
+    };
+
+    // ==================== MODULE: UI ====================
+    KaziModules.UI = {
+      currentTab: 'freelancers',
+
+      switchTab: function(tab) {
+        this.currentTab = tab;
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        event.target.classList.add('active');
+        
+        document.getElementById('freelancersSection').style.display = tab === 'freelancers' ? 'block' : 'none';
+        document.getElementById('jobsSection').style.display = tab === 'jobs' ? 'block' : 'none';
+        document.getElementById('companiesSection').style.display = tab === 'companies' ? 'block' : 'none';
+        
+        if (tab === 'jobs') KaziModules.Render.renderJobs();
+        if (tab === 'companies') KaziModules.Render.renderCompanies();
+      },
+
+      loadMore: (type) => {
+        KaziModules.showToast(`Loading more ${type}...`, 'info');
+      },
+
+      loadCategory: function(category) {
+        document.querySelectorAll('.category-chip').forEach(chip => chip.classList.remove('active'));
+        event.target.classList.add('active');
+        KaziModules.Render.renderCategoryResults(category);
+      },
+
+      populateDropdowns: function() {
+        const freelancerDistrict = document.getElementById('freelancerDistrict');
+        if (freelancerDistrict) {
+          freelancerDistrict.innerHTML = '<option value="">Select District</option>';
+          KaziModules.Data.allDistricts.forEach(d => {
+            freelancerDistrict.innerHTML += `<option value="${d}">${d}</option>`;
+          });
+        }
+        
+        const companyDistrict = document.getElementById('companyDistrict');
+        if (companyDistrict) {
+          companyDistrict.innerHTML = '<option value="">Select District</option>';
+          KaziModules.Data.allDistricts.forEach(d => {
+            companyDistrict.innerHTML += `<option value="${d}">${d}</option>`;
+          });
+        }
+        
+        const freelancerCategory = document.getElementById('freelancerCategory');
+        if (freelancerCategory) {
+          freelancerCategory.innerHTML = '<option value="">Select Category</option>';
+          KaziModules.Data.allCategories.forEach(c => {
+            freelancerCategory.innerHTML += `<option value="${c}">${c}</option>`;
+          });
+        }
+      }
+    };
+
+    // ==================== MODULE: SEARCH ====================
+    KaziModules.Search = {
+      searchTimeout: null,
+
+      performSearch: function() {
+        const query = document.getElementById('searchInput').value;
+        if (query.length < 2) {
+          document.getElementById('liveSearchResults').style.display = 'none';
+          return;
+        }
+        
+        const results = KaziModules.Data.search(query);
+        KaziModules.Render.renderSearchResults(results);
+      },
+
+      init: function() {
+        document.getElementById('searchInput').addEventListener('input', () => {
+          clearTimeout(this.searchTimeout);
+          this.searchTimeout = setTimeout(() => this.performSearch(), 300);
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!e.target.closest('.search-container')) {
+            document.getElementById('liveSearchResults').style.display = 'none';
+          }
+        });
+      }
+    };
+
+    // ==================== MODULE: AUTH ====================
+    KaziModules.Auth = {
+      selectedRole: null,
+      isLogin: false,
+      loginRole: 'freelancer',
+
+      toggleAuthMenu: function() {
+        document.getElementById('authMenu').classList.toggle('show');
+        document.getElementById('loginForm').classList.remove('show');
+      },
+
+      showLoginForm: function() {
+        document.getElementById('authMenu').classList.remove('show');
+        document.getElementById('loginForm').classList.add('show');
+      },
+
+      showSignupForm: function() {
+        document.getElementById('loginForm').classList.remove('show');
+        document.getElementById('authMenu').classList.add('show');
+      },
+
+      showAccountType: function(type) {
+        document.getElementById('authMenu').classList.remove('show');
+        if (type === 'freelancer') {
+          document.getElementById('freelancerSignupModal').classList.remove('hidden');
+        } else if (type === 'company') {
+          document.getElementById('companySignupModal').classList.remove('hidden');
+        } else {
+          document.getElementById('userSignupModal').classList.remove('hidden');
+        }
+      },
+
+      setLoginRole: function(role) {
+        this.loginRole = role;
+        document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+        event.target.classList.add('active');
+      },
+
+      handleLogin: async function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        try {
+          await KaziModules.firebase.signInWithEmailAndPassword(KaziModules.auth, email, password);
+          KaziModules.showToast('Login successful!', 'success');
+          document.getElementById('loginForm').classList.remove('show');
+          location.href = 'dashboard.html';
+        } catch (error) {
+          KaziModules.showToast(error.message, 'error');
+        }
+      },
+
+      selectRole: function(role) {
+        this.selectedRole = role;
+        document.querySelectorAll('.account-card').forEach(c => c.classList.remove('selected'));
+        document.getElementById(`role-${role}`).classList.add('selected');
+        
+        const form = document.getElementById('authForm');
+        form.classList.remove('hidden');
+        document.getElementById('authFormTitle').textContent = 
+          `Create ${role.charAt(0).toUpperCase() + role.slice(1)} Account`;
+        
+        document.getElementById('uniqueNameGroup').style.display = role === 'user' ? 'block' : 'none';
+      },
+
+      handleAuth: async function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const fullName = document.getElementById('fullName').value;
+        const uniqueName = document.getElementById('uniqueName')?.value;
+        
+        if (!email || !password) {
+          KaziModules.showToast('Please fill all fields', 'error');
+          return;
+        }
+        
+        try {
+          if (this.isLogin) {
+            await KaziModules.firebase.signInWithEmailAndPassword(KaziModules.auth, email, password);
+            KaziModules.showToast('Logged in!', 'success');
+            document.getElementById('authModal').classList.add('hidden');
+            location.href = 'dashboard.html';
+          } else {
+            if (!this.selectedRole) {
+              KaziModules.showToast('Please select account type', 'error');
               return;
             }
+            
+            if (this.selectedRole === 'user' && uniqueName) {
+              const q = KaziModules.firebase.query(
+                KaziModules.firebase.collection(KaziModules.db, 'users'), 
+                KaziModules.firebase.where('uniqueName', '==', uniqueName)
+              );
+              const snap = await KaziModules.firebase.getDocs(q);
+              if (!snap.empty) {
+                KaziModules.showToast('Username taken', 'error');
+                return;
+              }
+            }
+            
+            const userCred = await KaziModules.firebase.createUserWithEmailAndPassword(
+              KaziModules.auth, 
+              email, 
+              password
+            );
+            
+            const userData = {
+              uid: userCred.user.uid,
+              email,
+              role: this.selectedRole,
+              deviceId: this.selectedRole === 'user' ? KaziModules.deviceId : null,
+              createdAt: new Date().toISOString(),
+              verified: false,
+              boosted: false,
+              avgRating: 0,
+              reviewCount: 0,
+              followerCount: 0
+            };
+            
+            if (this.selectedRole === 'freelancer') {
+              userData.fullName = fullName;
+              userData.status = 'Available';
+              userData.portfolioImages = [];
+            } else if (this.selectedRole === 'company') {
+              userData.companyName = fullName;
+              userData.images = [];
+            } else {
+              userData.uniqueName = uniqueName;
+            }
+            
+            await KaziModules.firebase.setDoc(
+              KaziModules.firebase.doc(KaziModules.db, 'users', userCred.user.uid), 
+              userData
+            );
+            KaziModules.showToast('Account created!', 'success');
+            document.getElementById('authModal').classList.add('hidden');
+            location.href = 'dashboard.html';
           }
-          
-          const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+          KaziModules.showToast(error.message, 'error');
+        }
+      },
+
+      toggleAuthMode: function() {
+        this.isLogin = !this.isLogin;
+        document.getElementById('authSubmit').textContent = this.isLogin ? 'Sign In' : 'Create Account';
+        document.getElementById('authFormTitle').textContent = this.isLogin ? 'Sign In' : 'Create Account';
+        document.querySelector('.account-grid').style.display = this.isLogin ? 'none' : 'grid';
+      }
+    };
+
+    // ==================== MODULE: REGISTRATION ====================
+    KaziModules.Registration = {
+      async uploadImage(file) {
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('key', KaziModules.IMGBB_API_KEY);
+        
+        try {
+          const response = await fetch(KaziModules.IMGBB_URL, { method: 'POST', body: formData });
+          const data = await response.json();
+          return data.success ? data.data.url : null;
+        } catch (error) {
+          console.error('Upload error:', error);
+          return null;
+        }
+      },
+
+      async registerFreelancer(e) {
+        e.preventDefault();
+        
+        const file = document.getElementById('freelancerImage').files[0];
+        let imageUrl = '';
+        
+        if (file) {
+          KaziModules.showToast('Uploading image...', 'info');
+          imageUrl = await this.uploadImage(file);
+        }
+        
+        try {
+          const userCred = await KaziModules.firebase.createUserWithEmailAndPassword(
+            KaziModules.auth,
+            document.getElementById('freelancerEmail').value,
+            document.getElementById('freelancerPassword').value
+          );
           
           const userData = {
             uid: userCred.user.uid,
-            email,
-            role: selectedRole,
-            deviceId: selectedRole === 'user' ? deviceId : null,
-            createdAt: new Date().toISOString(),
+            fullName: document.getElementById('freelancerName').value,
+            profilePicture: imageUrl,
+            phone: document.getElementById('freelancerPhone').value,
+            email: document.getElementById('freelancerEmail').value,
+            district: document.getElementById('freelancerDistrict').value,
+            jobCategory: document.getElementById('freelancerCategory').value,
+            role: 'freelancer',
+            status: 'Available',
             verified: false,
             boosted: false,
             avgRating: 0,
             reviewCount: 0,
-            followerCount: 0
+            followerCount: 0,
+            views: 0,
+            portfolioImages: [],
+            createdAt: new Date().toISOString(),
+            deviceId: KaziModules.deviceId
           };
           
-          if (selectedRole === 'worker') {
-            userData.fullName = fullName;
-            userData.status = 'Available';
-            userData.portfolioImages = [];
-          } else if (selectedRole === 'company') {
-            userData.companyName = fullName;
-            userData.images = [];
-          } else {
-            userData.uniqueName = uniqueName;
+          await KaziModules.firebase.setDoc(
+            KaziModules.firebase.doc(KaziModules.db, 'users', userCred.user.uid), 
+            userData
+          );
+          KaziModules.showToast('Registration successful!', 'success');
+          document.getElementById('freelancerSignupModal').classList.add('hidden');
+          location.href = 'dashboard.html';
+        } catch (error) {
+          KaziModules.showToast(error.message, 'error');
+        }
+      },
+
+      async registerCompany(e) {
+        e.preventDefault();
+        
+        const file = document.getElementById('companyLogo').files[0];
+        let imageUrl = '';
+        
+        if (file) {
+          KaziModules.showToast('Uploading logo...', 'info');
+          imageUrl = await this.uploadImage(file);
+        }
+        
+        try {
+          const userCred = await KaziModules.firebase.createUserWithEmailAndPassword(
+            KaziModules.auth,
+            document.getElementById('companyEmail').value,
+            document.getElementById('companyPassword').value
+          );
+          
+          const userData = {
+            uid: userCred.user.uid,
+            companyName: document.getElementById('companyName').value,
+            logo: imageUrl,
+            phone: document.getElementById('companyPhone').value,
+            email: document.getElementById('companyEmail').value,
+            district: document.getElementById('companyDistrict').value,
+            role: 'company',
+            verified: false,
+            boosted: false,
+            avgRating: 0,
+            reviewCount: 0,
+            followerCount: 0,
+            views: 0,
+            images: [],
+            jobs: [],
+            createdAt: new Date().toISOString(),
+            deviceId: KaziModules.deviceId
+          };
+          
+          await KaziModules.firebase.setDoc(
+            KaziModules.firebase.doc(KaziModules.db, 'users', userCred.user.uid), 
+            userData
+          );
+          KaziModules.showToast('Registration successful!', 'success');
+          document.getElementById('companySignupModal').classList.add('hidden');
+          location.href = 'dashboard.html';
+        } catch (error) {
+          KaziModules.showToast(error.message, 'error');
+        }
+      },
+
+      async registerUser(e) {
+        e.preventDefault();
+        
+        const uniqueName = document.getElementById('userName').value;
+        
+        try {
+          const q = KaziModules.firebase.query(
+            KaziModules.firebase.collection(KaziModules.db, 'users'), 
+            KaziModules.firebase.where('uniqueName', '==', uniqueName)
+          );
+          const snap = await KaziModules.firebase.getDocs(q);
+          if (!snap.empty) {
+            KaziModules.showToast('Username already taken', 'error');
+            return;
           }
           
-          await setDoc(doc(db, 'users', userCred.user.uid), userData);
-          showToast('Account created!', 'success');
-          document.getElementById('authModal').classList.add('hidden');
+          const userCred = await KaziModules.firebase.createUserWithEmailAndPassword(
+            KaziModules.auth,
+            document.getElementById('userEmail').value,
+            document.getElementById('userPassword').value
+          );
+          
+          const userData = {
+            uid: userCred.user.uid,
+            uniqueName: uniqueName,
+            email: document.getElementById('userEmail').value,
+            role: 'user',
+            deviceId: KaziModules.deviceId,
+            createdAt: new Date().toISOString()
+          };
+          
+          await KaziModules.firebase.setDoc(
+            KaziModules.firebase.doc(KaziModules.db, 'users', userCred.user.uid), 
+            userData
+          );
+          KaziModules.showToast('Registration successful!', 'success');
+          document.getElementById('userSignupModal').classList.add('hidden');
           location.href = 'dashboard.html';
+        } catch (error) {
+          KaziModules.showToast(error.message, 'error');
         }
-      } catch (error) {
-        showToast(error.message, 'error');
       }
     };
 
-    window.toggleAuthMode = () => {
-      isLogin = !isLogin;
-      document.getElementById('authSubmit').textContent = isLogin ? 'Sign In' : 'Create Account';
-      document.getElementById('authFormTitle').textContent = isLogin ? 'Sign In' : 'Create Account';
-      document.querySelector('.account-grid').style.display = isLogin ? 'none' : 'grid';
-    };
-
-    // Check auth state
-    onAuthStateChanged(auth, (user) => {
-      const authBtn = document.getElementById('authBtn');
-      if (user) {
-        authBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i>';
-        authBtn.onclick = () => location.href = 'dashboard.html';
-      } else {
-        authBtn.innerHTML = '<i class="fas fa-user"></i>';
-        authBtn.onclick = toggleAuthMenu;
+    // ==================== MODULE: APP INIT ====================
+    KaziModules.App = {
+      init: function() {
+        console.log('🚀 Kazi ni Kazi initializing...');
+        
+        // Initialize location
+        KaziModules.Location.init();
+        
+        // Initialize search
+        KaziModules.Search.init();
+        
+        // Set up auth state listener
+        KaziModules.firebase.onAuthStateChanged(KaziModules.auth, (user) => {
+          const authBtn = document.getElementById('authBtn');
+          if (user) {
+            authBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i>';
+            authBtn.onclick = () => location.href = 'dashboard.html';
+          } else {
+            authBtn.innerHTML = '<i class="fas fa-user"></i>';
+            authBtn.onclick = KaziModules.Auth.toggleAuthMenu;
+          }
+        });
+        
+        // Close modals when clicking outside
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+              modal.classList.add('hidden');
+            }
+          });
+        });
+        
+        // Load all data
+        KaziModules.Data.loadAllData();
+        
+        console.log('✅ Kazi ni Kazi ready!');
       }
-    });
-
-    // Load districts and categories for dropdowns
-    async function loadDropdowns() {
-      const districtsSnap = await getDocs(collection(db, 'districts'));
-      const categoriesSnap = await getDocs(collection(db, 'categories'));
-      
-      const districtSelects = ['workerDistrict', 'companyDistrict', 'filterDistrict'];
-      districtSelects.forEach(id => {
-        const select = document.getElementById(id);
-        if (select) {
-          select.innerHTML = '<option value="">All Districts</option>';
-          districtsSnap.forEach(d => {
-            select.innerHTML += `<option value="${d.data().name}">${d.data().name}</option>`;
-          });
-        }
-      });
-      
-      const categorySelects = ['workerCategory', 'filterCategory'];
-      categorySelects.forEach(id => {
-        const select = document.getElementById(id);
-        if (select) {
-          select.innerHTML = '<option value="">All Categories</option>';
-          categoriesSnap.forEach(c => {
-            select.innerHTML += `<option value="${c.data().name}">${c.data().name}</option>`;
-          });
-        }
-      });
-    }
-
-    // Close modals when clicking outside
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.classList.add('hidden');
-        }
-      });
-    });
-
-    // Initialize
-    loadDropdowns();
-    loadAllData();
+    };
   </script>
 </body>
 </html>
