@@ -641,7 +641,6 @@
   </style>
 </head>
 <body>
-  <!-- Header (unchanged) -->
   <header class="sticky-header">
     <div class="logo" onclick="location.href='/'">
       <i class="fas fa-briefcase"></i>
@@ -927,24 +926,49 @@
     window.KaziModules = {};
 
     // ==================== MODULE: FIREBASE INIT ====================
-    (function() {
+    (async function() {
       console.log('🔥 Initializing Firebase...');
       
-      import('./firebase-cfg.js').then(module => {
-        window.KaziModules.firebase = module;
-        window.KaziModules.auth = module.auth;
-        window.KaziModules.db = module.db;
-        window.KaziModules.IMGBB_API_KEY = module.IMGBB_API_KEY;
-        window.KaziModules.IMGBB_URL = module.IMGBB_URL;
-        window.KaziModules.deviceId = module.deviceId;
-        window.KaziModules.sessionId = module.sessionId;
-        window.KaziModules.showToast = module.showToast;
+      try {
+        const module = await import('./firebase-cfg.js');
+        
+        // Store all exports in KaziModules.firebase
+        KaziModules.firebase = module;
+        KaziModules.auth = module.auth;
+        KaziModules.db = module.db;
+        KaziModules.IMGBB_API_KEY = module.IMGBB_API_KEY;
+        KaziModules.IMGBB_URL = module.IMGBB_URL;
+        KaziModules.deviceId = module.deviceId;
+        KaziModules.sessionId = module.sessionId;
+        KaziModules.showToast = module.showToast;
+        
+        // Also store individual functions for easy access
+        KaziModules.signInWithEmailAndPassword = module.signInWithEmailAndPassword;
+        KaziModules.createUserWithEmailAndPassword = module.createUserWithEmailAndPassword;
+        KaziModules.signOut = module.signOut;
+        KaziModules.onAuthStateChanged = module.onAuthStateChanged;
+        KaziModules.collection = module.collection;
+        KaziModules.doc = module.doc;
+        KaziModules.setDoc = module.setDoc;
+        KaziModules.getDoc = module.getDoc;
+        KaziModules.getDocs = module.getDocs;
+        KaziModules.updateDoc = module.updateDoc;
+        KaziModules.deleteDoc = module.deleteDoc;
+        KaziModules.addDoc = module.addDoc;
+        KaziModules.query = module.query;
+        KaziModules.where = module.where;
+        KaziModules.orderBy = module.orderBy;
+        KaziModules.limit = module.limit;
+        KaziModules.onSnapshot = module.onSnapshot;
+        KaziModules.Timestamp = module.Timestamp;
+        
+        console.log('✅ Firebase initialized successfully');
         
         // Initialize app after Firebase is ready
         KaziModules.App.init();
-      }).catch(error => {
+      } catch (error) {
         console.error('Firebase initialization failed:', error);
-      });
+      }
     })();
 
     // ==================== MODULE: UTILITIES ====================
@@ -1003,11 +1027,11 @@
               };
               localStorage.setItem('userLocation', JSON.stringify(this.userLocation));
               document.getElementById('locationBanner').style.display = 'none';
-              KaziModules.showToast('Location enabled! Showing nearby freelancers', 'success');
+              if (KaziModules.showToast) KaziModules.showToast('Location enabled! Showing nearby freelancers', 'success');
               KaziModules.Data.loadAllData();
             },
             (error) => {
-              KaziModules.showToast('Please enable location for better results', 'info');
+              if (KaziModules.showToast) KaziModules.showToast('Please enable location for better results', 'info');
             }
           );
         }
@@ -1043,44 +1067,47 @@
       allDistricts: [],
 
       async loadAllData() {
+        if (!KaziModules.db) {
+          console.error('Firestore not initialized yet');
+          return;
+        }
+        
         KaziModules.Utils.showSpinner(true);
         
         try {
-          const { db } = KaziModules;
-          
           // Load freelancers
-          const freelancersSnap = await KaziModules.firebase.getDocs(
-            KaziModules.firebase.query(
-              KaziModules.firebase.collection(db, 'users'), 
-              KaziModules.firebase.where('role', '==', 'freelancer')
+          const freelancersSnap = await KaziModules.getDocs(
+            KaziModules.query(
+              KaziModules.collection(KaziModules.db, 'users'), 
+              KaziModules.where('role', '==', 'freelancer')
             )
           );
           this.allFreelancers = freelancersSnap.docs.map(d => ({ uid: d.id, ...d.data() }));
           
           // Load companies
-          const companiesSnap = await KaziModules.firebase.getDocs(
-            KaziModules.firebase.query(
-              KaziModules.firebase.collection(db, 'users'), 
-              KaziModules.firebase.where('role', '==', 'company')
+          const companiesSnap = await KaziModules.getDocs(
+            KaziModules.query(
+              KaziModules.collection(KaziModules.db, 'users'), 
+              KaziModules.where('role', '==', 'company')
             )
           );
           this.allCompanies = companiesSnap.docs.map(d => ({ uid: d.id, ...d.data() }));
           
           // Load jobs
-          const jobsSnap = await KaziModules.firebase.getDocs(
-            KaziModules.firebase.collection(db, 'jobs')
+          const jobsSnap = await KaziModules.getDocs(
+            KaziModules.collection(KaziModules.db, 'jobs')
           );
           this.allJobs = jobsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
           
           // Load categories
-          const categoriesSnap = await KaziModules.firebase.getDocs(
-            KaziModules.firebase.collection(db, 'categories')
+          const categoriesSnap = await KaziModules.getDocs(
+            KaziModules.collection(KaziModules.db, 'categories')
           );
           this.allCategories = categoriesSnap.docs.map(d => d.data().name);
           
           // Load districts
-          const districtsSnap = await KaziModules.firebase.getDocs(
-            KaziModules.firebase.collection(db, 'districts')
+          const districtsSnap = await KaziModules.getDocs(
+            KaziModules.collection(KaziModules.db, 'districts')
           );
           this.allDistricts = districtsSnap.docs.map(d => d.data().name);
           
@@ -1093,7 +1120,7 @@
           
         } catch (error) {
           console.error('Error loading data:', error);
-          KaziModules.showToast('Error loading data', 'error');
+          if (KaziModules.showToast) KaziModules.showToast('Error loading data', 'error');
         } finally {
           KaziModules.Utils.showSpinner(false);
         }
@@ -1348,7 +1375,7 @@
       },
 
       loadMore: (type) => {
-        KaziModules.showToast(`Loading more ${type}...`, 'info');
+        if (KaziModules.showToast) KaziModules.showToast(`Loading more ${type}...`, 'info');
       },
 
       loadCategory: function(category) {
@@ -1458,12 +1485,12 @@
         const password = document.getElementById('loginPassword').value;
         
         try {
-          await KaziModules.firebase.signInWithEmailAndPassword(KaziModules.auth, email, password);
-          KaziModules.showToast('Login successful!', 'success');
+          await KaziModules.signInWithEmailAndPassword(KaziModules.auth, email, password);
+          if (KaziModules.showToast) KaziModules.showToast('Login successful!', 'success');
           document.getElementById('loginForm').classList.remove('show');
           location.href = 'dashboard.html';
         } catch (error) {
-          KaziModules.showToast(error.message, 'error');
+          if (KaziModules.showToast) KaziModules.showToast(error.message, 'error');
         }
       },
 
@@ -1489,35 +1516,35 @@
         const uniqueName = document.getElementById('uniqueName')?.value;
         
         if (!email || !password) {
-          KaziModules.showToast('Please fill all fields', 'error');
+          if (KaziModules.showToast) KaziModules.showToast('Please fill all fields', 'error');
           return;
         }
         
         try {
           if (this.isLogin) {
-            await KaziModules.firebase.signInWithEmailAndPassword(KaziModules.auth, email, password);
-            KaziModules.showToast('Logged in!', 'success');
+            await KaziModules.signInWithEmailAndPassword(KaziModules.auth, email, password);
+            if (KaziModules.showToast) KaziModules.showToast('Logged in!', 'success');
             document.getElementById('authModal').classList.add('hidden');
             location.href = 'dashboard.html';
           } else {
             if (!this.selectedRole) {
-              KaziModules.showToast('Please select account type', 'error');
+              if (KaziModules.showToast) KaziModules.showToast('Please select account type', 'error');
               return;
             }
             
             if (this.selectedRole === 'user' && uniqueName) {
-              const q = KaziModules.firebase.query(
-                KaziModules.firebase.collection(KaziModules.db, 'users'), 
-                KaziModules.firebase.where('uniqueName', '==', uniqueName)
+              const q = KaziModules.query(
+                KaziModules.collection(KaziModules.db, 'users'), 
+                KaziModules.where('uniqueName', '==', uniqueName)
               );
-              const snap = await KaziModules.firebase.getDocs(q);
+              const snap = await KaziModules.getDocs(q);
               if (!snap.empty) {
-                KaziModules.showToast('Username taken', 'error');
+                if (KaziModules.showToast) KaziModules.showToast('Username taken', 'error');
                 return;
               }
             }
             
-            const userCred = await KaziModules.firebase.createUserWithEmailAndPassword(
+            const userCred = await KaziModules.createUserWithEmailAndPassword(
               KaziModules.auth, 
               email, 
               password
@@ -1547,16 +1574,16 @@
               userData.uniqueName = uniqueName;
             }
             
-            await KaziModules.firebase.setDoc(
-              KaziModules.firebase.doc(KaziModules.db, 'users', userCred.user.uid), 
+            await KaziModules.setDoc(
+              KaziModules.doc(KaziModules.db, 'users', userCred.user.uid), 
               userData
             );
-            KaziModules.showToast('Account created!', 'success');
+            if (KaziModules.showToast) KaziModules.showToast('Account created!', 'success');
             document.getElementById('authModal').classList.add('hidden');
             location.href = 'dashboard.html';
           }
         } catch (error) {
-          KaziModules.showToast(error.message, 'error');
+          if (KaziModules.showToast) KaziModules.showToast(error.message, 'error');
         }
       },
 
@@ -1592,12 +1619,12 @@
         let imageUrl = '';
         
         if (file) {
-          KaziModules.showToast('Uploading image...', 'info');
+          if (KaziModules.showToast) KaziModules.showToast('Uploading image...', 'info');
           imageUrl = await this.uploadImage(file);
         }
         
         try {
-          const userCred = await KaziModules.firebase.createUserWithEmailAndPassword(
+          const userCred = await KaziModules.createUserWithEmailAndPassword(
             KaziModules.auth,
             document.getElementById('freelancerEmail').value,
             document.getElementById('freelancerPassword').value
@@ -1624,15 +1651,15 @@
             deviceId: KaziModules.deviceId
           };
           
-          await KaziModules.firebase.setDoc(
-            KaziModules.firebase.doc(KaziModules.db, 'users', userCred.user.uid), 
+          await KaziModules.setDoc(
+            KaziModules.doc(KaziModules.db, 'users', userCred.user.uid), 
             userData
           );
-          KaziModules.showToast('Registration successful!', 'success');
+          if (KaziModules.showToast) KaziModules.showToast('Registration successful!', 'success');
           document.getElementById('freelancerSignupModal').classList.add('hidden');
           location.href = 'dashboard.html';
         } catch (error) {
-          KaziModules.showToast(error.message, 'error');
+          if (KaziModules.showToast) KaziModules.showToast(error.message, 'error');
         }
       },
 
@@ -1643,12 +1670,12 @@
         let imageUrl = '';
         
         if (file) {
-          KaziModules.showToast('Uploading logo...', 'info');
+          if (KaziModules.showToast) KaziModules.showToast('Uploading logo...', 'info');
           imageUrl = await this.uploadImage(file);
         }
         
         try {
-          const userCred = await KaziModules.firebase.createUserWithEmailAndPassword(
+          const userCred = await KaziModules.createUserWithEmailAndPassword(
             KaziModules.auth,
             document.getElementById('companyEmail').value,
             document.getElementById('companyPassword').value
@@ -1674,15 +1701,15 @@
             deviceId: KaziModules.deviceId
           };
           
-          await KaziModules.firebase.setDoc(
-            KaziModules.firebase.doc(KaziModules.db, 'users', userCred.user.uid), 
+          await KaziModules.setDoc(
+            KaziModules.doc(KaziModules.db, 'users', userCred.user.uid), 
             userData
           );
-          KaziModules.showToast('Registration successful!', 'success');
+          if (KaziModules.showToast) KaziModules.showToast('Registration successful!', 'success');
           document.getElementById('companySignupModal').classList.add('hidden');
           location.href = 'dashboard.html';
         } catch (error) {
-          KaziModules.showToast(error.message, 'error');
+          if (KaziModules.showToast) KaziModules.showToast(error.message, 'error');
         }
       },
 
@@ -1692,17 +1719,17 @@
         const uniqueName = document.getElementById('userName').value;
         
         try {
-          const q = KaziModules.firebase.query(
-            KaziModules.firebase.collection(KaziModules.db, 'users'), 
-            KaziModules.firebase.where('uniqueName', '==', uniqueName)
+          const q = KaziModules.query(
+            KaziModules.collection(KaziModules.db, 'users'), 
+            KaziModules.where('uniqueName', '==', uniqueName)
           );
-          const snap = await KaziModules.firebase.getDocs(q);
+          const snap = await KaziModules.getDocs(q);
           if (!snap.empty) {
-            KaziModules.showToast('Username already taken', 'error');
+            if (KaziModules.showToast) KaziModules.showToast('Username already taken', 'error');
             return;
           }
           
-          const userCred = await KaziModules.firebase.createUserWithEmailAndPassword(
+          const userCred = await KaziModules.createUserWithEmailAndPassword(
             KaziModules.auth,
             document.getElementById('userEmail').value,
             document.getElementById('userPassword').value
@@ -1717,15 +1744,15 @@
             createdAt: new Date().toISOString()
           };
           
-          await KaziModules.firebase.setDoc(
-            KaziModules.firebase.doc(KaziModules.db, 'users', userCred.user.uid), 
+          await KaziModules.setDoc(
+            KaziModules.doc(KaziModules.db, 'users', userCred.user.uid), 
             userData
           );
-          KaziModules.showToast('Registration successful!', 'success');
+          if (KaziModules.showToast) KaziModules.showToast('Registration successful!', 'success');
           document.getElementById('userSignupModal').classList.add('hidden');
           location.href = 'dashboard.html';
         } catch (error) {
-          KaziModules.showToast(error.message, 'error');
+          if (KaziModules.showToast) KaziModules.showToast(error.message, 'error');
         }
       }
     };
@@ -1742,16 +1769,20 @@
         KaziModules.Search.init();
         
         // Set up auth state listener
-        KaziModules.firebase.onAuthStateChanged(KaziModules.auth, (user) => {
-          const authBtn = document.getElementById('authBtn');
-          if (user) {
-            authBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i>';
-            authBtn.onclick = () => location.href = 'dashboard.html';
-          } else {
-            authBtn.innerHTML = '<i class="fas fa-user"></i>';
-            authBtn.onclick = KaziModules.Auth.toggleAuthMenu;
-          }
-        });
+        if (KaziModules.onAuthStateChanged) {
+          KaziModules.onAuthStateChanged(KaziModules.auth, (user) => {
+            const authBtn = document.getElementById('authBtn');
+            if (user) {
+              authBtn.innerHTML = '<i class="fas fa-tachometer-alt"></i>';
+              authBtn.onclick = () => location.href = 'dashboard.html';
+            } else {
+              authBtn.innerHTML = '<i class="fas fa-user"></i>';
+              authBtn.onclick = KaziModules.Auth.toggleAuthMenu;
+            }
+          });
+        } else {
+          console.error('onAuthStateChanged not available');
+        }
         
         // Close modals when clicking outside
         document.querySelectorAll('.modal-overlay').forEach(modal => {
@@ -1763,7 +1794,9 @@
         });
         
         // Load all data
-        KaziModules.Data.loadAllData();
+        setTimeout(() => {
+          KaziModules.Data.loadAllData();
+        }, 500);
         
         console.log('✅ Kazi ni Kazi ready!');
       }
