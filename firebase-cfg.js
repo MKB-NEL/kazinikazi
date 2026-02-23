@@ -21,7 +21,7 @@ export const db = getFirestore(app);
 export const IMGBB_API_KEY = 'ba8023ca74166460c442e8e703d2a1b0';
 export const IMGBB_URL = 'https://api.imgbb.com/1/upload';
 
-// Device ID for tracking
+// Device ID for user accounts
 export const deviceId = localStorage.getItem('deviceId') || 
   'device_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
 localStorage.setItem('deviceId', deviceId);
@@ -29,7 +29,7 @@ localStorage.setItem('deviceId', deviceId);
 // Session ID for tracking
 export const sessionId = 'session_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
 
-// Toast function
+// Toast notification
 export function showToast(message, type = 'info') {
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
@@ -39,10 +39,10 @@ export function showToast(message, type = 'info') {
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
-    background: ${type === 'success' ? '#27ae60' : type === 'error' ? '#FF385C' : '#222222'};
+    background: ${type === 'success' ? '#27ae60' : type === 'error' ? '#ff385c' : '#222222'};
     color: white;
     padding: 16px 24px;
-    border-radius: 40px;
+    border-radius: 999px;
     box-shadow: 0 12px 24px rgba(0,0,0,0.2);
     z-index: 3000;
     font-weight: 500;
